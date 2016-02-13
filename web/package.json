@@ -1,0 +1,29 @@
+{
+  "name": "ai_contester_web",
+  "version": "1.0.0",
+  "description": "Website for AI Contester.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Baydin (2DKot)",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "browserify": "^13.0.0",
+    "browserify-shim": "^3.8.12",
+    "gulp": "^3.9.1",
+    "gulp-typescript": "^2.11.0",
+    "react-dom": "^0.14.7",
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "browserify-shim": {
+    "react": "global:React",
+    "react-dom": "global:ReactDOM"
+  }
+}

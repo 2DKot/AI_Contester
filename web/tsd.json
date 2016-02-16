@@ -43,6 +43,18 @@
     },
     "glob/glob.d.ts": {
       "commit": "85af69c91599a6c904618545f0613970e1ff3f64"
+    },
+    "connect/connect.d.ts": {
+      "commit": "85af69c91599a6c904618545f0613970e1ff3f64"
+    },
+    "serve-static/serve-static.d.ts": {
+      "commit": "85af69c91599a6c904618545f0613970e1ff3f64"
+    },
+    "mime/mime.d.ts": {
+      "commit": "85af69c91599a6c904618545f0613970e1ff3f64"
+    },
+    "express/express.d.ts": {
+      "commit": "85af69c91599a6c904618545f0613970e1ff3f64"
     }
   }
 }

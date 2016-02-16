@@ -9,9 +9,10 @@
   "author": "Baydin (2DKot)",
   "license": "MIT",
   "private": true,
-  "devDependencies": {
+  "dependencies": {
     "browserify": "^13.0.0",
     "browserify-shim": "^3.8.12",
+    "del": "^2.2.0",
     "gulp": "^3.9.1",
     "gulp-typescript": "^2.11.0",
     "react-dom": "^0.14.7",

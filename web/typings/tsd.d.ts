@@ -8,3 +8,6 @@
 /// <reference path="typescript/typescript.d.ts" />
 /// <reference path="browserify/browserify.d.ts" />
 /// <reference path="vinyl-source-stream/vinyl-source-stream.d.ts" />
+/// <reference path="del/del.d.ts" />
+/// <reference path="glob/glob.d.ts" />
+/// <reference path="minimatch/minimatch.d.ts" />

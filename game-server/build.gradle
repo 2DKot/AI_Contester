@@ -1,0 +1,26 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+run
+{
+standardInput = System.in
+}
+
+mainClassName = 'com.belocraft.Main'
+
+sourceCompatibility = JavaVersion.VERSION_1_7
+targetCompatibility = JavaVersion.VERSION_1_7
+
+repositories
+{
+	mavenCentral()
+}
+
+jar 
+{
+	manifest.attributes('Main-Class': mainClassName);
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.11'
+}

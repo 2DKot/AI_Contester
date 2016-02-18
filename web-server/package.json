@@ -1,0 +1,20 @@
+{
+  "name": "web-server",
+  "version": "1.0.0",
+  "description": "REST server for web.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Baydin (2DKot)",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "del": "^2.2.0",
+    "express": "^4.13.4",
+    "gulp": "^3.9.1",
+    "gulp-typescript": "^2.11.0",
+    "vinyl-source-stream": "^1.1.0"
+  }
+}

@@ -7,6 +7,8 @@ var router = express.Router();
 var bodyParser = require('body-parser');
 
 router.get('/hello', function(req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept');
     if (!req.name) {
         res.json({
             status: "error",

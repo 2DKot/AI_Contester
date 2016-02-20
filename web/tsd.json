@@ -55,6 +55,9 @@
     },
     "express/express.d.ts": {
       "commit": "85af69c91599a6c904618545f0613970e1ff3f64"
+    },
+    "whatwg-fetch/whatwg-fetch.d.ts": {
+      "commit": "95b7178e0ef33b4b88327676418b4cc3ad61df0f"
     }
   }
 }

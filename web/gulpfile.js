@@ -58,3 +58,9 @@ gulp.task('browserify', ['compile-src'], () => {
 });
 
 gulp.task('build-app', ['compile-server', 'through', 'browserify', 'copy-images']);
+
+gulp.task('watch',[], () => {
+    gulp.watch(['src/**/*.{ts,tsx}', 'src/index.html'], () => {
+        gulp.start('build-app');
+    });
+});

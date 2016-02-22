@@ -42,13 +42,6 @@ gulp.task('through', [], () => {
     return result;
 });
 
-gulp.task('copy-fetch.js', [], ()=> {
-    let result = gulp
-        .src('node_modules/whatwg-fetch/fetch.js')
-        .pipe(gulp.dest('dist/app/lib'));
-    return result;
-});
-
 gulp.task('copy-images', [], () => {
     let result = gulp
         .src('src/img/*')
@@ -64,7 +57,7 @@ gulp.task('browserify', ['compile-src'], () => {
     return result;
 });
 
-gulp.task('build-app', ['compile-server', 'through', 'browserify', 'copy-images', 'copy-fetch.js']);
+gulp.task('build-app', ['compile-server', 'through', 'browserify', 'copy-images']);
 
 gulp.task('watch',[], () => {
     gulp.watch(['src/**/*.{ts,tsx}', 'src/index.html'], () => {

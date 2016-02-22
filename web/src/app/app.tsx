@@ -3,6 +3,6 @@
 
 import * as React from 'react';
 import * as ReactDom from 'react-dom';
-import {Hello} from './test';
+import {Hello, Num} from './test';
 
-ReactDom.render(React.createElement(Hello), document.getElementById('app'));
+ReactDom.render(<div><Hello/><Num/></div>, document.getElementById('app'));

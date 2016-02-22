@@ -17,11 +17,11 @@ export interface IHelloState {
 export class Hello extends React.Component<IHelloProps, IHelloState> {
     constructor(props: IHelloProps) {
         super(props);
-        this.state = { name: "NONAME", message: "" };
+        this.state = { name: "", message: "" };
     }
 
     handleSubmit() {
-        fetch('http://127.0.0.1:3000/hello')
+        fetch('http://127.0.0.1:3000/hello/' + this.state.name)
             .then(response => response.json())
             .then(json => {
                 this.setState({ name: this.state.name, message: json.message });
@@ -38,8 +38,8 @@ export class Hello extends React.Component<IHelloProps, IHelloState> {
     render() {
         return (
             <div>
-                <input onChange={e => this.handleChange(e) }/>
-                <button onClick = {e => this.handleSubmit()}>GO</button>
+                name:<input onChange={e => this.handleChange(e) }/>
+                <button onClick = {e => this.handleSubmit()}>Hello!</button><br/>
                 {this.state.message}
             </div>
         );

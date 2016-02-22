@@ -1,25 +1,22 @@
 /// <reference path="../typings/node/node.d.ts"/>
 /// <reference path="../typings/express/express.d.ts"/>
 
+import * as Express from 'express';
+
 var express = require('express');
-var app = express();
-var router = express.Router();
+var app: Express.Application = express();
+var router: Express.Router = express.Router();
 var bodyParser = require('body-parser');
 
-router.get('/hello', function(req, res, next) {
+router.get('/hello/:name', function(req: Express.Request, res: Express.Response, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept');
-    if (!req.name) {
-        res.json({
-            status: "error",
-            msg: "Need name field in request body"
-        });
-        return;
-    }   
+    //There is no need to check that name param isn't undefined.
+    //Request /hello/ wouldn't handled by this router.
     
     res.json({
         status: "ok",
-        msg: "Hello " + req.name + "."
+        message: "Привет, " + req.params.name + "!"
     });
 });
 

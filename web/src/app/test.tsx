@@ -39,9 +39,9 @@ export class Hello extends React.Component<IHelloProps, IHelloState> {
         return (
             <div>
                 <input onChange={e => this.handleChange(e) }/>
-                <button onClick = {this.handleSubmit}>GO</button>
-                HELLLOOO {this.state.name}
-                </div>
+                <button onClick = {e => this.handleSubmit()}>GO</button>
+                {this.state.message}
+            </div>
         );
     }
 }

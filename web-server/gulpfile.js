@@ -23,3 +23,9 @@ gulp.task('build-app', [], () => {
         .js.pipe(gulp.dest('dist'));
     return result;
 });
+
+gulp.task('watch',[], () => {
+    gulp.watch('src/**/*.ts', () => {
+        gulp.start('build-app');
+    });
+});

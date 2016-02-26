@@ -1,6 +1,16 @@
 apply plugin: 'java'
 apply plugin: 'application'
 
+dependencies
+{
+	testCompile 'junit:junit:4.12'
+}
+
+task testReport(type: TestReport){
+	destinationDir = file ("$buildDir/report/Test")
+	reportOn subprojects*.test
+}
+
 run
 {
 standardInput = System.in

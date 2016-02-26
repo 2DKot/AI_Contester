@@ -9,3 +9,12 @@ If you don't want to run the application after build
 ``` bash
 gradlew build
 ```
+
+Type in cmd for test the project
+``` bash
+gradlew test
+```
+
+Look on reports in folder '...build\reports\tests'
+
+Same you may run test right click on test file and see results.

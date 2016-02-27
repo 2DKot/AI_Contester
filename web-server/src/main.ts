@@ -10,11 +10,20 @@ var app: express.Application = express();
 var router: express.Router = express.Router();
 import bodyParser = require('body-parser');
 
+
 router.all("/*", function(req: express.Request, res: express.Response, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept');
+    res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept, authorization');
+    console.log("method: ", req.method)
+    console.log("headers: ", req.headers);
+    console.log("body: ", req.body);
     next();
+});
+
+router.options("/*", function(req: express.Request, res: express.Response, next) {
+    res.statusCode = 204;
+    res.end();
 });
 
 router.get('/hello/:name', function(req: express.Request, res: express.Response, next) {
@@ -51,7 +60,11 @@ var oauth = oauthserver({
 app.all('/oauth/token', oauth.grant());
 
 app.all('/secret', oauth.authorise(), function (req, res) {
-  res.send('Secret area');
+  console.log('user:', req.user);
+  res.json({
+      status: "ok",
+      message: "Юзер c id:" + req.user.id + " достиг секретного места!"
+  });
 });
 
 app.use(oauth.errorHandler());

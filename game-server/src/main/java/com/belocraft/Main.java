@@ -4,6 +4,10 @@
  * and open the template in the editor.
  */
 package com.belocraft;
+
+import com.belocraft.gameplay.GameServer;
+
+
 /**
  *
  * @author Eugene
@@ -14,6 +18,9 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args){
-				        
+
+        GameServer game = new GameServer();               
+        game.Start();        
+        
     }   
 }

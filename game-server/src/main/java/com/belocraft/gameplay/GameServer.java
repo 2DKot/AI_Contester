@@ -8,6 +8,8 @@ package com.belocraft.gameplay;
 import com.belocraft.models.Player;
 import com.belocraft.models.World;
 import com.belocraft.network.Runner;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import javax.json.Json;
@@ -60,7 +62,7 @@ public class GameServer {
         return this.game_over;
     }
     
-    public void Start()
+    public void Start() throws FileNotFoundException
     {
         int ticks = 20;
         
@@ -78,7 +80,10 @@ public class GameServer {
         }
         
         String js = WriteJson();
-        
+        PrintWriter out = new PrintWriter("result.json");
+        out.write(js);
+        out.flush();
+        out.close();
     }
     
     void AddX(float X)

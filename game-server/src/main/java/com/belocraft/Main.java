@@ -6,6 +6,7 @@
 package com.belocraft;
 
 import com.belocraft.gameplay.GameServer;
+import java.io.FileNotFoundException;
 
 
 /**
@@ -17,10 +18,9 @@ public class Main {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args){
+    public static void main(String[] args) throws FileNotFoundException{
 
         GameServer game = new GameServer();               
-        game.Start();        
-        
+        game.Start();                
     }   
 }

@@ -16,6 +16,7 @@
     "del": "^2.2.0",
     "gulp": "^3.9.1",
     "gulp-typescript": "^2.11.0",
+    "mongoose": "^4.4.5",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "serve-static": "^1.10.2",

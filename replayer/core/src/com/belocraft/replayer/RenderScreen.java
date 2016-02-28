@@ -7,9 +7,12 @@ package com.belocraft.replayer;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import java.util.ArrayList;
 
 /**
  *
@@ -17,12 +20,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  */
 public class RenderScreen implements Screen {
 
-    SpriteBatch batch;
-    Texture img;
-
-    public RenderScreen() {
-        batch = new SpriteBatch();
-        img = new Texture("badlogic.jpg");
+    private SpriteBatch batch;    
+    private BitmapFont font;
+    private RenderObjects objsRender;
+    
+    public RenderScreen(RenderObjects objsRender) {
+        batch = new SpriteBatch();        
+        font = new BitmapFont();
+        font.setColor(Color.BLUE);
+        this.objsRender = objsRender;
     }
 
     @Override
@@ -30,13 +36,36 @@ public class RenderScreen implements Screen {
         
     }
 
+    float tempRender = 0;
+    int frame = 0;
+    int tempFrame = 0;
+    
     @Override
-    public void render(float delta) {
-        Gdx.gl.glClearColor(1, 0, 0, 1);
+    public void render(float delta) {        
+        Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        batch.begin();
-        batch.draw(img, 0, 0);
+       
+        batch.begin();        
+        
+        font.draw(batch, String.valueOf(frame), 0, 480);
+        
+        ArrayList<ObjectToRender> renderObject = objsRender.getRenderObject();
+        
+        for(ObjectToRender obj : renderObject)
+        {            
+            batch.draw(obj.getTexture(), obj.getX(), obj.getY());            
+        }        
         batch.end();
+        
+        if (tempRender >= 1)
+        {
+            frame = tempFrame;
+            tempRender = 0;
+            tempFrame = 0;
+        }
+        
+        tempRender += delta;
+        tempFrame++;
     }
 
     @Override
@@ -60,8 +89,8 @@ public class RenderScreen implements Screen {
     }
 
     @Override
-    public void dispose() {
-       img.dispose();
-       batch.dispose();
+    public void dispose() {       
+       batch.dispose();       
+       font.dispose();
     }
 }

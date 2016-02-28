@@ -3,11 +3,15 @@ buildscript {
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         jcenter()
+		flatDir {
+       dirs 'libs'
+   }
     }
-    dependencies {
+    dependencies {	
         classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
     }
 }
+	
 
 allprojects {
     apply plugin: "eclipse"
@@ -27,17 +31,29 @@ allprojects {
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+		
+		flatDir {
+       dirs 'libs'
+   }
+   
     }
 }
 
 project(":desktop") {
     apply plugin: "java"
 
+	repositories {
+   flatDir {
+       dirs 'libs'
+	   mavenCentral()
+   }
+}
 
     dependencies {
         compile project(":core")
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+		compile 'javax.json:javax.json-1.0.4'	
     }
 }
 
@@ -45,21 +61,33 @@ project(":html") {
     apply plugin: "gwt"
     apply plugin: "war"
 
+	repositories {
+   flatDir {
+       dirs 'libs'
+   }
+}
 
     dependencies {
         compile project(":core")
         compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
         compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
+		compile 'javax.json:javax.json-1.0.4'
     }
 }
 
 project(":core") {
     apply plugin: "java"
 
+	repositories {
+   flatDir {
+       dirs 'libs'
+   }
+}
 
     dependencies {
-        compile "com.badlogicgames.gdx:gdx:$gdxVersion"
+		compile 'javax.json:javax.json-1.0.4'
+        compile "com.badlogicgames.gdx:gdx:$gdxVersion"		
     }
 }
 

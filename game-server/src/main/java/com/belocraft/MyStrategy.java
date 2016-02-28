@@ -13,22 +13,25 @@ import com.belocraft.models.World;
  *
  * @author Eugene
  */
-public class MyStrategy implements Strategy{
+public class MyStrategy implements Strategy {
 
     Boolean t = false;
+
     @Override
-    public void Move(Player play, World world, com.belocraft.models.Move move) {
-        
-        if (play.GetPositionX() > 0.5F && t == false)
-        move.setDirection(Direction.left);
-        else t = true;
-        
-        if (t && play.GetPositionX() < 14.5F)
-        {
-            move.setDirection(Direction.right);
+    public void move(Player play, World world, com.belocraft.models.Move move) {
+
+        if (play.getPositionX() > 0.5F && t == false) {
+            move.setDirection(Direction.left);
+        } else {
+            t = true;
         }
-        else t = false;
-                
+
+        if (t && play.getPositionX() < 14.5F) {
+            move.setDirection(Direction.right);
+        } else {
+            t = false;
+        }
+
     }
-    
+
 }

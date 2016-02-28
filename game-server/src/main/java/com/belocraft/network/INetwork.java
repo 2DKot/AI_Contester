@@ -12,6 +12,8 @@ import com.belocraft.models.Move;
  * @author Eugene
  */
 public interface INetwork {
+
     public void writeSocket(Move move);
+
     public PlayerContext readSocket();
 }

@@ -12,8 +12,10 @@ import com.belocraft.models.Move;
  * @author Eugene
  */
 public interface IRemoteProcess {
-    
-    public Boolean GameOVER();
-    public PlayerContext ReadPlayerContext();
-    public void WriteMove(Move move);
+
+    public Boolean getGameOver();
+
+    public PlayerContext readPlayerContext();
+
+    public void writeMove(Move move);
 }

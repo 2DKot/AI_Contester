@@ -12,32 +12,31 @@ import com.belocraft.models.Move;
  *
  * @author Eugene
  */
-public class RemoteProcess implements IRemoteProcess{
+public class RemoteProcess implements IRemoteProcess {
 
     Network network;
-    Boolean game_over = false;        
-    
-    public RemoteProcess(For_Test_Network net, Runner runner)
-    {        
+    Boolean game_over = false;
+
+    public RemoteProcess(For_Test_Network net, Runner runner) {
         network = new Network(net, runner);
     }
-    
+
     @Override
-    public Boolean GameOVER() {
+    public Boolean getGameOver() {
         return game_over;
     }
 
     @Override
-    public PlayerContext ReadPlayerContext() {
+    public PlayerContext readPlayerContext() {
         PlayerContext context = network.readSocket();
-        if (context != null) this.game_over = context.getGame_over();
+        if (context != null) {
+            this.game_over = context.getGameOver();
+        }
         return context;
     }
 
     @Override
-    public void WriteMove(Move move) {        
+    public void writeMove(Move move) {
         network.writeSocket(move);
     }
-    
-    
 }

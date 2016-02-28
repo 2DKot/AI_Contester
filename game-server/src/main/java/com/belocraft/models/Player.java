@@ -10,16 +10,14 @@ package com.belocraft.models;
  * @author Eugene
  */
 public class Player {
-    
-    private float X = 0;
-    
-    public Player(float X)
-    {
-        this.X = X;
+
+    private float x = 0;
+
+    public Player(float x) {
+        this.x = x;
     }
-    
-    public float GetPositionX()
-    {
-        return X;
+
+    public float getPositionX() {
+        return x;
     }
 }

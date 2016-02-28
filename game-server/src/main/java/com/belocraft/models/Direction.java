@@ -9,7 +9,6 @@ package com.belocraft.models;
  *
  * @author Eugene
  */
-public enum Direction 
-    {
-        left,right,none
-    } 
+public enum Direction {
+    left, right, none
+}

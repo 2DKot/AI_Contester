@@ -15,5 +15,5 @@ import com.belocraft.models.World;
  */
 public interface Strategy {
     
-    public void Move(Player play, World world, Move move);
+    public void move(Player play, World world, Move move);
 }

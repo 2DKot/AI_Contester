@@ -14,7 +14,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
-import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
 /**
@@ -22,19 +21,18 @@ import javax.json.JsonObjectBuilder;
  * @author Eugene
  */
 public class GameServer {
-    
-    private LocalStrategy[] lstrategy;
+
+    private LocalStrategy[] lstrategies;
     private World world;
     private Processor processor;
     private Network network;
-    private Boolean all_readed;  
+    private Boolean all_readed;
     private Boolean game_over;
     private ArrayList map_history;
-    
+
     private Runner runner;
-    
-    public GameServer()
-    {
+
+    public GameServer() {
         this.processor = new Processor();
         this.all_readed = true;
         this.network = new com.belocraft.gameplay.Network(this);
@@ -43,64 +41,61 @@ public class GameServer {
         Player[] players = new Player[1];
         players[0] = new Player(15);
         this.world = new World(players);
-        this.game_over = false;      
+        this.game_over = false;
         this.map_history = new ArrayList();
-    }        
-    
-    public void setLocalStrategy(LocalStrategy[] lstrategy)
-    {
-        this.lstrategy = lstrategy;    
+    }
+
+    public void setLocalStrategy(LocalStrategy[] lstrategy) {
+        this.lstrategies = lstrategy;
         all_readed = true;
     }
-    
-    public World getWorld()
-    {
+
+    public World getWorld() {
         return world;
-    }        
-    
-    public Boolean getGameOver(){
+    }
+
+    public Boolean getGameOver() {
         return this.game_over;
     }
-    
-    public void Start() throws FileNotFoundException
-    {
+
+    public void Start() throws FileNotFoundException {
         int ticks = 20;
-        
-        while(ticks != 0)
-        {
-            if (all_readed)
-            {
-                world = processor.Tick(lstrategy, world);
-                AddX(world.getPlayers()[0].GetPositionX());
+
+        while (ticks != 0) {
+            if (all_readed) {
+                world = processor.tick(lstrategies, world);
+                addX(world.getPlayers()[0].getPositionX());
                 ticks--;
                 all_readed = false;
+            } else {
+                network.requestInfo(runner);
             }
-            else network.requestInfo(runner);
-            network.SendData();                       
+
+            network.sendData();
         }
-        
-        String js = WriteJson();
+
+        String js = writeJson();
         PrintWriter out = new PrintWriter("result.json");
         out.write(js);
         out.flush();
         out.close();
     }
-    
-    void AddX(float X)
-    {
-        map_history.add(X);
-    }    
-    
-    public String WriteJson()
-    {
+
+    void addX(float x) {
+        map_history.add(x);
+    }
+
+    public String writeJson() {
         JsonArrayBuilder array = Json.createArrayBuilder();
-        for (int i = 0; i < map_history.size(); i++){
+        for (int i = 0; i < map_history.size(); i++) {
             JsonObjectBuilder value = Json.createObjectBuilder();
-            value.add("tick", i);        
-            value.add("players", Json.createObjectBuilder()
-                    .add("X", String.valueOf((float)map_history.get(i))));
+            JsonArrayBuilder array_value = Json.createArrayBuilder();
+            value.add("tick", i);            
+            array_value.add(Json.createObjectBuilder()
+                    .add("x", (float) map_history.get(i)));
+            value.add("players", array_value);
             array.add(value);
-        }                
+        }
         return array.build().toString();
     }
 }

@@ -13,6 +13,7 @@ import com.belocraft.models.World;
  * @author Eugene
  */
 public class PlayerContext {
+
     private final Player player;
     private final World world;
     private Boolean game_over;
@@ -30,14 +31,12 @@ public class PlayerContext {
     public World getWorld() {
         return world;
     }
-    
-    public Boolean getGame_over()
-    {
+
+    public Boolean getGameOver() {
         return game_over;
     }
-    
-    public void setGame_over()
-    {
+
+    public void setGameOver() {
         this.game_over = true;
     }
 }

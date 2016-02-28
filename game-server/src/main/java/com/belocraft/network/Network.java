@@ -16,59 +16,62 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.json.JsonStructure;
+
 /**
  *
  * @author Eugene
  */
-public class Network implements INetwork{
-    
+public class Network implements INetwork {
+
     For_Test_Network network;
     Runner runner;
-    
-    public Network(For_Test_Network net, Runner runner)
-    {
+
+    public Network(For_Test_Network net, Runner runner) {
         this.network = net;
         this.runner = runner;
     }
-    
+
     @Override
-    public PlayerContext readSocket() {        
-        String income_json = network.ReadData();
-        
-        if (income_json == null) return null;
-        
-        InputStream is = 
-                new ByteArrayInputStream
-        (income_json.getBytes(Charset.defaultCharset()));  
-        
+    public PlayerContext readSocket() {
+        String income_json = network.readData();
+
+        if (income_json == null) {
+            return null;
+        }
+
+        InputStream is
+                = new ByteArrayInputStream(income_json.getBytes(Charset.defaultCharset()));
+
         JsonReader reader = Json.createReader(is);
-        
+
         JsonStructure js = reader.read();
-        JsonObject jo = (JsonObject)js;
-        
-        String position_x = jo.getString("X");                            
-        
-        Player player = new Player(Float.parseFloat(position_x));
-        
+        JsonObject jo = (JsonObject) js;
+
+        float position_x = (float)jo.getJsonNumber("x").doubleValue();
+
+        Player player = new Player(position_x);
+
         Player[] players = new Player[1];
         players[0] = player;
-        
+
         PlayerContext pc = new PlayerContext(player, new World(players));
-        
-        Boolean game_over = jo.getBoolean("Game_Over");          
-        if (game_over) pc.setGame_over();        
-        
-        runner.Run();
-        
-        return pc;        
+
+        Boolean game_over = jo.getBoolean("game_over");
+        if (game_over) {
+            pc.setGameOver();
+        }
+
+        runner.run();
+
+        return pc;
     }
 
     @Override
-    public void writeSocket(Move move) {                           
-        
+    public void writeSocket(Move move) {
+
         String direction;
-        
-        switch(move.getDirection()){
+
+        switch (move.getDirection()) {
             case left:
                 direction = "left";
                 break;
@@ -79,12 +82,12 @@ public class Network implements INetwork{
                 direction = "none";
                 break;
         }
-        
+
         JsonObject value = Json.createObjectBuilder()
-                .add("Direction", direction)
+                .add("direction", direction)
                 .build();
-        
-        network.SendData(value.toString());
+
+        network.sendData(value.toString());
     }
-    
+
 }

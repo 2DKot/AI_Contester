@@ -10,7 +10,8 @@ package com.belocraft.gameplay;
  * @author Eugene
  */
 public interface For_Test_Network {
- 
-    public String ReadData();
-    public void SendData(String Move);
+
+    public String readData();
+
+    public void sendData(String Move);
 }

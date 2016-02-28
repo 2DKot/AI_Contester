@@ -14,22 +14,19 @@ import com.belocraft.models.Move;
  *
  * @author Eugene
  */
-public class Runner implements IRunner{
-    
-    
-    For_Test_Network network;    
+public class Runner {
+
+    For_Test_Network network;
     IRemoteProcess remote;
-    Strategy strategy = new MyStrategy(); 
-    
-    public Runner(For_Test_Network net)
-    {
+    Strategy strategy = new MyStrategy();
+
+    public Runner(For_Test_Network net) {
         this.network = net;
-        remote = new RemoteProcess(network,this);         
+        remote = new RemoteProcess(network, this);
     }
-    
-    public void Run()
-    {   
-             
+
+    public void run() {
+
         //так будет для сокетов, но не сейчас
         /*
         while (!remote.GameOVER())
@@ -40,14 +37,11 @@ public class Runner implements IRunner{
             strategy.Move(context.getPlayer(), context.getWorld(), move);
             remote.WriteMove(move);
         }*/
-        
-        
         Move move = new Move();
-        PlayerContext context = remote.ReadPlayerContext();      
-        if (context != null)
-        {
-            strategy.Move(context.getPlayer(), context.getWorld(), move);
-            remote.WriteMove(move);
+        PlayerContext context = remote.readPlayerContext();
+        if (context != null) {
+            strategy.move(context.getPlayer(), context.getWorld(), move);
+            remote.writeMove(move);
         }
     }
 }

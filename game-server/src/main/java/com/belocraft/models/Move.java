@@ -10,21 +10,18 @@ package com.belocraft.models;
  * @author Eugene
  */
 public class Move {
-    
+
     private Direction direction;
-    
-    public Move()
-    {
+
+    public Move() {
         this.direction = Direction.none;
     }
-    
-    public Direction getDirection()
-    {
+
+    public Direction getDirection() {
         return direction;
     }
-    
-    public void setDirection(Direction direction)
-    {
+
+    public void setDirection(Direction direction) {
         this.direction = direction;
-    }             
+    }
 }

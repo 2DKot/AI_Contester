@@ -10,16 +10,14 @@ package com.belocraft.models;
  * @author Eugene
  */
 public class World {
-    
+
     private Player[] players;
-    
-    public World(Player[] players)
-    {
+
+    public World(Player[] players) {
         this.players = players;
     }
-    
-    public Player[] getPlayers()
-    {
+
+    public Player[] getPlayers() {
         return players;
     }
 }

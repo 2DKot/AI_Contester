@@ -19,58 +19,57 @@ import javax.json.JsonStructure;
  *
  * @author Eugene
  */
-public class Network implements For_Test_Network{
+public class Network implements For_Test_Network {
 
     GameServer game_server;
-    
-    
-    public Network(GameServer server)
-    {
-        this.game_server = server;        
+
+    public Network(GameServer server) {
+        this.game_server = server;
     }
-    
-    private String Data = "";
-    
-    public void SendData()
-    {
-        float num = game_server.getWorld().getPlayers()[0].GetPositionX();
-        
+
+    private String data = "";
+
+    public void sendData() {
+        float x = game_server.getWorld().getPlayers()[0].getPositionX();
+
         JsonObject value = Json.createObjectBuilder()
-                .add("X", String.valueOf(num))
-                .add("Game_Over", game_server.getGameOver())
+                .add("x", x)
+                .add("game_over", game_server.getGameOver())
                 .build();
-        Data = value.toString();
+        data = value.toString();
     }
-    
-    public void requestInfo(Runner runner)
-    {
-        runner.Run();
-    }
-    
-    @Override
-    public String ReadData() {
-        if ("".equals(Data)) return null;
-        String Data_copy = Data;
-        Data = "";
-        return Data_copy;       
+
+    public void requestInfo(Runner runner) {
+        runner.run();
     }
 
     @Override
-    public void SendData(String move) {                                       
-         InputStream is = 
-                new ByteArrayInputStream
-        (move.getBytes(Charset.defaultCharset()));  
-        
+    public String readData() {
+
+        if ("".equals(data)) {
+            return null;
+        }
+
+        String Data_copy = data;
+        data = "";
+        return Data_copy;
+    }
+
+    @Override
+    public void sendData(String move) {
+        InputStream is
+                = new ByteArrayInputStream(move.getBytes(Charset.defaultCharset()));
+
         JsonReader reader = Json.createReader(is);
-        
+
         JsonStructure js = reader.read();
-        JsonObject jo = (JsonObject)js;
-        
-        String direction = jo.getString("Direction");
-        
+        JsonObject jo = (JsonObject) js;
+
+        String direction = jo.getString("direction");      
+
         Direction dir;
-        
-        switch(direction){
+
+        switch (direction) {
             case "left":
                 dir = Direction.left;
                 break;
@@ -81,12 +80,11 @@ public class Network implements For_Test_Network{
                 dir = Direction.none;
                 break;
         }
-        
-        LocalStrategy[] lstrategy = new LocalStrategy[1];
-        lstrategy[0] = new LocalStrategy(dir);
-        
-        game_server.setLocalStrategy(lstrategy);
+
+        LocalStrategy[] lstrategies = new LocalStrategy[1];
+        lstrategies[0] = new LocalStrategy(dir);
+
+        game_server.setLocalStrategy(lstrategies);
     }
-    
-    
+
 }

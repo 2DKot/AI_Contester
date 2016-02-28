@@ -16,26 +16,22 @@ public class ObjectToRender {
     private float x;
     private float y;
     private Texture texture;
-    
-    public ObjectToRender(float x, float y, Texture texture)
-    {
+
+    public ObjectToRender(float x, float y, Texture texture) {
         this.x = x;
         this.y = y;
         this.texture = texture;
     }
-    
-    public void setX(float x)
-    {
+
+    public void setX(float x) {
         this.x = x;
     }
-    
-    public void setY(float y)
-    {
+
+    public void setY(float y) {
         this.y = y;
     }
-    
-    public void setPixmap(Texture texture)
-    {
+
+    public void setPixmap(Texture texture) {
         this.texture = texture;
     }
 

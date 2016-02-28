@@ -12,22 +12,19 @@ import java.util.ArrayList;
  * @author Eugene
  */
 public class RenderObjects {
-    
+
     private ArrayList<ObjectToRender> renderObject
             = new ArrayList<ObjectToRender>();
-    
-    public ArrayList<ObjectToRender> getRenderObject()
-    {
+
+    public ArrayList<ObjectToRender> getRenderObject() {
         return renderObject;
     }
-    
-    public void addRenderObject(ObjectToRender object)
-    {
+
+    public void addRenderObject(ObjectToRender object) {
         renderObject.add(object);
     }
-    
-    public void removeRenderObject(ObjectToRender object)
-    {
+
+    public void removeRenderObject(ObjectToRender object) {
         renderObject.remove(object);
     }
 }

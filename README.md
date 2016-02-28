@@ -9,7 +9,10 @@ System uses MongoDB. Download it from https://www.mongodb.org/downloads and inst
 ``` bash
 run-mongo.bat
 ```
-
+If it is first running, you should register front-end application on back-end server by running
+``` bash
+register-app.bat
+```
 #Game server
 Folow instructions in game-server/README.md
 

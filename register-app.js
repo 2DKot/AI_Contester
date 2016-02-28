@@ -1,2 +1,2 @@
 use test;
-db.oauthclients.insert({clientId: "SuperID", clientSecret: "SuperSecret"});
+db.oauthclients.insert({clientId: "superID", clientSecret: "superSecret"});

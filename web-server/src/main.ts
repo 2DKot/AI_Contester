@@ -7,24 +7,15 @@
 
 import express = require('express');
 var app: express.Application = express();
-var router: express.Router = express.Router();
 import bodyParser = require('body-parser');
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
-router.all("/*", function(req: express.Request, res: express.Response, next) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept, authorization');
-    console.log("method: ", req.method)
-    console.log("headers: ", req.headers);
-    console.log("body: ", req.body);
-    next();
-});
+var cors: express.Router = require('./cors');
+app.use(cors);
 
-router.options("/*", function(req: express.Request, res: express.Response, next) {
-    res.statusCode = 204;
-    res.end();
-});
+var router: express.Router = express.Router();
 
 router.get('/hello/:name', function(req: express.Request, res: express.Response, next) {
     //There is no need to check that name param isn't undefined.
@@ -41,9 +32,6 @@ router.post('/test', function(req: express.Request, res: express.Response, next)
     console.log(req.body);
     res.end();
 });
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(router);
 

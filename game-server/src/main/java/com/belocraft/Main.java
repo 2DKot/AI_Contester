@@ -20,6 +20,6 @@ public class Main {
     public static void main(String[] args) throws FileNotFoundException {
 
         GameServer game = new GameServer();
-        game.Start();
+        game.start();
     }
 }

@@ -58,7 +58,7 @@ public class GameServer {
         return this.game_over;
     }
 
-    public void Start() throws FileNotFoundException {
+    public void start() throws FileNotFoundException {
         int ticks = 20;
 
         while (ticks != 0) {

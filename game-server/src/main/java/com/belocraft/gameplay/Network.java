@@ -21,20 +21,20 @@ import javax.json.JsonStructure;
  */
 public class Network implements For_Test_Network {
 
-    GameServer game_server;
+    GameServer gameServer;
 
     public Network(GameServer server) {
-        this.game_server = server;
+        this.gameServer = server;
     }
 
     private String data = "";
 
     public void sendData() {
-        float x = game_server.getWorld().getPlayers()[0].getPositionX();
+        float x = gameServer.getWorld().getPlayers()[0].getPositionX();
 
         JsonObject value = Json.createObjectBuilder()
                 .add("x", x)
-                .add("game_over", game_server.getGameOver())
+                .add("game_over", gameServer.getGameOver())
                 .build();
         data = value.toString();
     }
@@ -50,9 +50,9 @@ public class Network implements For_Test_Network {
             return null;
         }
 
-        String Data_copy = data;
+        String dataCopy = data;
         data = "";
-        return Data_copy;
+        return dataCopy;
     }
 
     @Override
@@ -84,7 +84,7 @@ public class Network implements For_Test_Network {
         LocalStrategy[] lstrategies = new LocalStrategy[1];
         lstrategies[0] = new LocalStrategy(dir);
 
-        game_server.setLocalStrategy(lstrategies);
+        gameServer.setLocalStrategy(lstrategies);
     }
 
 }

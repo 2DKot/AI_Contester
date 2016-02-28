@@ -34,9 +34,9 @@ public class ProcessorTest extends junit.framework.TestCase {
         players[0] = player;
         World world = new World(players);
         
-        World new_world = processor.Tick(lss, world);
+        World new_world = processor.tick(lss, world);
         
-        assertEquals(0.5F,new_world.getPlayers()[0].GetPositionX());
+        assertEquals(0.5F,new_world.getPlayers()[0].getPositionX());
     }	
     
      public void test_right()
@@ -49,9 +49,9 @@ public class ProcessorTest extends junit.framework.TestCase {
         players[0] = player;
         World world = new World(players);
         
-        World new_world = processor.Tick(lss, world);
+        World new_world = processor.tick(lss, world);
         
-        assertEquals(0.5F,new_world.getPlayers()[0].GetPositionX());
+        assertEquals(0.5F,new_world.getPlayers()[0].getPositionX());
     }	
      
       public void test_none()
@@ -64,8 +64,8 @@ public class ProcessorTest extends junit.framework.TestCase {
         players[0] = player;
         World world = new World(players);
         
-        World new_world = processor.Tick(lss, world);
+        World new_world = processor.tick(lss, world);
         
-        assertEquals(0.0F,new_world.getPlayers()[0].GetPositionX());
+        assertEquals(0.0F,new_world.getPlayers()[0].getPositionX());
     }	
 }

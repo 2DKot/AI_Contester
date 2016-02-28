@@ -5,7 +5,9 @@
  */
 package com.belocraft;
 
-import java.util.Scanner;
+import com.belocraft.gameplay.GameServer;
+import java.io.FileNotFoundException;
+
 /**
  *
  * @author Eugene
@@ -15,17 +17,9 @@ public class Main {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args){
-				
-        
-        System.out.print("Hello world, beaches!");				
-        Scanner a = new Scanner(System.in);    
-        
-        String n = a.nextLine();        
+    public static void main(String[] args) throws FileNotFoundException {
+
+        GameServer game = new GameServer();
+        game.start();
     }
-    
-	public int Sum(int a, int b)
-	{
-		return a+b;
-	}
 }

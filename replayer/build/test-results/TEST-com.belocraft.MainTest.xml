@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.belocraft.MainTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2016-02-27T23:11:42" hostname="KoKs" time="0.006">
+  <properties/>
+  <testcase name="test_Sum_positive" classname="com.belocraft.MainTest" time="0.005"/>
+  <testcase name="test_Sum_negative" classname="com.belocraft.MainTest" time="0.0"/>
+  <testcase name="test_Sum_both_negative" classname="com.belocraft.MainTest" time="0.0"/>
+  <testcase name="test_Sum_other_numbers" classname="com.belocraft.MainTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

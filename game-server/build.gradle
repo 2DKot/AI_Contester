@@ -1,9 +1,22 @@
 apply plugin: 'java'
 apply plugin: 'application'
 
+repositories {
+   flatDir {
+       dirs 'libs'
+   }
+}
+
 dependencies
 {
+	compile 'javax.json:javax.json-1.0.4'	
 	testCompile 'junit:junit:4.12'
+}
+
+task(debug, dependsOn: 'classes', type: JavaExec) {
+    main = 'com.belocraft.Main'
+    classpath = sourceSets.main.runtimeClasspath    
+    debug true
 }
 
 task testReport(type: TestReport){

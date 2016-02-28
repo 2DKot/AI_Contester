@@ -35,8 +35,8 @@ export interface ILoginProps {
 }
 
 export interface ILoginState {
-    username: string,
-    password: string
+    username?: string,
+    password?: string
 }
 
 export class Login extends React.Component<ILoginProps, ILoginState> {
@@ -45,10 +45,10 @@ export class Login extends React.Component<ILoginProps, ILoginState> {
         this.state = { username:"", password: "" };
     }
     handleName(e){
-        this.setState({ username:e.target.value, password: this.state.password });
+        this.setState({ username: e.target.value });
     }
     handlePassword(e){
-        this.setState({ username: this.state.username, password: e.target.value });
+        this.setState({ password: e.target.value });
     }
     authorize() {
         var checkStatus = function(response) {
@@ -63,7 +63,7 @@ export class Login extends React.Component<ILoginProps, ILoginState> {
         var parseJSON = function(response) {
             return response.json()
         }
-        var authString = 'Basic ' + base64encode('lol:lolka');
+        var authString = 'Basic ' + base64encode('superID:superPassword');
         var bodyString = 'grant_type=password&username='+this.state.username+'&password='+this.state.password;
         fetch(window.location.origin + ':3000/oauth/token/', {
             method: 'post',
@@ -85,7 +85,8 @@ export class Login extends React.Component<ILoginProps, ILoginState> {
     }
     render() {
         return (
-            <div>
+            <div style = {{border: "solid"}}>
+                <h3>Вход</h3>
                 username:<input onChange={e => this.handleName(e)}/>
                 password:<input onChange={e => this.handlePassword(e)}/>
                 <button onClick={e=>this.authorize()}>login</button>

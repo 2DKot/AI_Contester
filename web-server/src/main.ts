@@ -15,6 +15,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 var cors: express.Router = require('./cors');
 app.use(cors);
 
+var registration: express.Router = require('./registration');
+app.use(registration);
+
 var router: express.Router = express.Router();
 
 router.get('/hello/:name', function(req: express.Request, res: express.Response, next) {
@@ -47,11 +50,29 @@ var oauth = oauthserver({
 
 app.all('/oauth/token', oauth.grant());
 
+import mongoose = require('mongoose');
+import Model = mongoose.Model;
+var userModel = require('./model/oauth_models').Users;
+
 app.all('/secret', oauth.authorise(), function (req, res) {
   console.log('user:', req.user);
-  res.json({
-      status: "ok",
-      message: "Юзер c id:" + req.user.id + " достиг секретного места!"
+  userModel.findOne({ _id: req.user.id }, function(err, user){
+      if (err) {
+          res.status(500).json({
+              message: "Database error."
+          });
+          throw err;
+          return;
+      };
+      if (!user) {
+          res.status(404).json({
+              message: "User with id " + req.user.id + " wasn't found."
+          });
+          return;
+      }
+      res.status(200).json({
+          message: "Юзер " + user.username + " c почтой " + user.email + " достиг секретного места!"
+      });
   });
 });
 

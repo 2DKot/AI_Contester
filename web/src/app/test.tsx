@@ -37,7 +37,8 @@ export class Hello extends React.Component<IHelloProps, IHelloState> {
 
     render() {
         return (
-            <div>
+            <div style = {{border: "solid"}}>
+                <h3>Тест обычного запроса</h3>
                 name:<input onChange={e => this.handleChange(e) }/>
                 <button onClick = {e => this.handleSubmit()}>Hello!</button><br/>
                 {this.state.message}

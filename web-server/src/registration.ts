@@ -34,9 +34,10 @@ router.post("/users", function(req: Request, res: Response, next) {
         return;
     };
     //TODO: username || email
-    userModel.find({ username: username }, function(err, user) {
+    userModel.findOne({ $or: [{username: username}, {email: email}] }, function(err, user) {
+        console.log(user);
         if(err) {
-            res.json(500, {
+            res.status(500).json({
                 message: "Database error."
             });
             throw err;
@@ -46,10 +47,10 @@ router.post("/users", function(req: Request, res: Response, next) {
             if(user.username == username) {
                 var conflictPart = "name " + username; 
             }
-            else {
+            else if(user.email == email) {
                 var conflictPart = "email " + email;
             }
-            res.json(409, {
+            res.status(409).json({
                 message: 'There is already user with ' + conflictPart + '.'
             });
             return;
@@ -61,14 +62,14 @@ router.post("/users", function(req: Request, res: Response, next) {
         });
         user.save(function(err) {
             if(err) {
-                res.json(500, {
+                res.status(500).json({
                     message: "Database error."
                 });
                 throw err;
                 return;
             };
-            res.json(201, {
-                message: "User " + username + "was successfully registered."
+            res.status(201).json({
+                message: "User " + username + " was successfully registered."
             });
         });
     });

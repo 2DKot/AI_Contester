@@ -1,0 +1,1 @@
+mongo < "register-app.js"

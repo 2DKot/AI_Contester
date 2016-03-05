@@ -3,19 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.belocraft.network;
-
-import com.belocraft.models.Move;
+package com.belocraft.models;
 
 /**
  *
  * @author Eugene
  */
-public interface IRemoteProcess {
+public class Player {
 
-    public Boolean getGameOver();
+    private float x = 0;
 
-    public PlayerContext readPlayerContext();
+    public Player(float x) {
+        this.x = x;
+    }
 
-    public void writeMove(Move move);
+    public float getPositionX() {
+        return x;
+    }
 }

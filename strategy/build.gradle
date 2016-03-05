@@ -1,0 +1,49 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+repositories {
+   flatDir {
+       dirs 'libs'
+   }
+}
+
+dependencies
+{
+	compile 'javax.json:javax.json-1.0.4'	
+	testCompile 'junit:junit:4.12'
+}
+
+task(debug, dependsOn: 'classes', type: JavaExec) {
+    main = 'com.belocraft.Main'
+    classpath = sourceSets.main.runtimeClasspath    
+    debug true
+}
+
+task testReport(type: TestReport){
+	destinationDir = file ("$buildDir/report/Test")
+	reportOn subprojects*.test
+}
+
+run
+{
+standardInput = System.in
+}
+
+mainClassName = 'com.belocraft.Main'
+
+sourceCompatibility = JavaVersion.VERSION_1_7
+targetCompatibility = JavaVersion.VERSION_1_7
+
+repositories
+{
+	mavenCentral()
+}
+
+jar 
+{
+	manifest.attributes('Main-Class': mainClassName);
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.11'
+}

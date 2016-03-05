@@ -5,28 +5,29 @@
  */
 package com.belocraft.network;
 
-import com.belocraft.gameplay.For_Test_Network;
 import com.belocraft.models.Move;
 
 /**
  *
  * @author Eugene
  */
-public class RemoteProcess implements IRemoteProcess {
+public class RemoteProcess {
 
     Network network;
     Boolean game_over = false;
 
-    public RemoteProcess(For_Test_Network net, Runner runner) {
-        network = new Network(net, runner);
+    public RemoteProcess(){
+        network = new Network();
     }
-
-    @Override
+    
+    public Boolean connect(String adress, int port){
+        return network.connect(adress, port);
+    }
+    
     public Boolean getGameOver() {
         return game_over;
     }
-
-    @Override
+    
     public PlayerContext readPlayerContext() {
         PlayerContext context = network.readSocket();
         if (context != null) {
@@ -35,7 +36,6 @@ public class RemoteProcess implements IRemoteProcess {
         return context;
     }
 
-    @Override
     public void writeMove(Move move) {
         network.writeSocket(move);
     }

@@ -1,9 +1,12 @@
 /// <reference path="../../typings/react/react.d.ts"/>
 /// <reference path="../../typings/react/react-dom.d.ts"/>
 /// <reference path="../../typings/whatwg-fetch/whatwg-fetch.d.ts"/>
+/// <reference path="./config.d.ts"/>
 
 "use strict";
 import * as React from 'react';
+
+var endpoint = "http://" + config.backend.ip + ":" + config.backend.port;
 
 export interface ISignupProps {
     
@@ -47,7 +50,7 @@ export class Signup extends React.Component<ISignupProps, ISignupState> {
         if(this.state.password != this.state.passwordDuplicate) {
             return;
         }
-        fetch(window.location.origin + ":3000/users", {
+        fetch(endpoint + "users", {
             method: 'post',
             headers: {
               'Content-Type': 'application/json' 

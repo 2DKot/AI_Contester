@@ -1,6 +1,7 @@
 .gradle
 build/
 .nb-gradle
+result.json
 
 # Ignore Gradle GUI config
 gradle-app.setting

@@ -68,7 +68,7 @@ export class Login extends React.Component<ILoginProps, ILoginState> {
         }
         var authString = 'Basic ' + base64encode('superID:superSecret');
         var bodyString = 'grant_type=password&username='+this.state.username+'&password='+this.state.password;
-        fetch(endpoint + '/oauth/token/', {
+        fetch(endpoint + 'oauth/token/', {
             method: 'post',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',

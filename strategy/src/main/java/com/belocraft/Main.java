@@ -21,12 +21,18 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Runner runner;
 
+        String adress = "127.0.0.1";
+        int port = 2550;
+
         if (args.length > 0) {
-            runner = new Runner(args[0], Integer.parseInt(args[1]));
-        } else {
-            runner = new Runner("127.0.0.1", 2550);
+            adress = args[0];
+            port = Integer.parseInt(args[1]);
         }
 
-        runner.run();
+        runner = new Runner();
+
+        if (runner.connect(adress, port)) {
+            runner.run();
+        }
     }
 }

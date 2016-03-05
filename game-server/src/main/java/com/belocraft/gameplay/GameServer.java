@@ -8,6 +8,7 @@ package com.belocraft.gameplay;
 import com.belocraft.models.Player;
 import com.belocraft.models.World;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.json.Json;
@@ -24,25 +25,24 @@ public class GameServer {
     private World world;
     private final Processor processor;
     private final Network network;
-    private Boolean all_readed;
-    private final Boolean game_over;
+    private Boolean allReaded;
+    private Boolean gameOver;
     private final ArrayList map_history;   
 
-    public GameServer() {
-        this.processor = new Processor();
-        this.all_readed = true;
-        this.network = new com.belocraft.gameplay.Network(this);        
-        this.all_readed = false;
+    public GameServer(int port) throws IOException {
+        this.processor = new Processor();        
+        this.network = new com.belocraft.gameplay.Network(this,port);        
+        this.allReaded = false;
         Player[] players = new Player[1];
         players[0] = new Player(15);
         this.world = new World(players);
-        this.game_over = false;
+        this.gameOver = false;
         this.map_history = new ArrayList();
     }
 
     public void setLocalStrategy(LocalStrategy[] lstrategy) {
         this.lstrategies = lstrategy;
-        all_readed = true;
+        allReaded = true;
     }
 
     public World getWorld() {
@@ -50,30 +50,35 @@ public class GameServer {
     }
 
     public Boolean getGameOver() {
-        return this.game_over;
+        return this.gameOver;
     }
 
-    public void start() throws FileNotFoundException {
+    public void start() throws FileNotFoundException, IOException {
         int ticks = 20;
+        
+        network.waitConnection();
 
         while (ticks != 0) {
-            if (all_readed) {
+            if (allReaded) {
                 world = processor.tick(lstrategies, world);
                 addX(world.getPlayers()[0].getPositionX());
                 ticks--;
-                all_readed = false;
-            } else {
-                network.requestInfo();
-            }
-
-            network.sendData();
+                allReaded = false;
+            } else 
+            {
+                network.sendData();
+                network.readData();
+            }           
         }
+        
+        this.gameOver = true;
+        network.sendData();
 
         String js = writeJson();
-        PrintWriter out = new PrintWriter("result.json");
-        out.write(js);
-        out.flush();
-        out.close();
+        try (PrintWriter out = new PrintWriter("result.json")) {
+            out.write(js);
+            out.flush();
+        }
     }
 
     void addX(float x) {

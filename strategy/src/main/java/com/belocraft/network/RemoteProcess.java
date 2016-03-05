@@ -6,27 +6,28 @@
 package com.belocraft.network;
 
 import com.belocraft.models.Move;
-import java.io.IOException;
 
 /**
  *
  * @author Eugene
  */
-public class RemoteProcess implements IRemoteProcess {
+public class RemoteProcess {
 
     Network network;
     Boolean game_over = false;
 
-    public RemoteProcess(String adress, int port) throws IOException {
-        network = new Network(adress, port);
+    public RemoteProcess(){
+        network = new Network();
     }
-
-    @Override
+    
+    public Boolean connect(String adress, int port){
+        return network.connect(adress, port);
+    }
+    
     public Boolean getGameOver() {
         return game_over;
     }
-
-    @Override
+    
     public PlayerContext readPlayerContext() {
         PlayerContext context = network.readSocket();
         if (context != null) {
@@ -35,7 +36,6 @@ public class RemoteProcess implements IRemoteProcess {
         return context;
     }
 
-    @Override
     public void writeMove(Move move) {
         network.writeSocket(move);
     }

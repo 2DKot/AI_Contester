@@ -16,16 +16,19 @@ import java.io.IOException;
  */
 public class Runner {
 
-    IRemoteProcess remote;
+    RemoteProcess remote;
     Strategy strategy = new MyStrategy();
 
-    public Runner(String adress, int port) throws IOException {
-        remote = new RemoteProcess(adress, port);
+    public Runner(){
+        remote = new RemoteProcess();
+    }
+    
+    public Boolean connect(String adress, int port){
+        return remote.connect(adress,port);
     }
 
     public void run() {
-
-        //так будет для сокетов, но не сейчас
+        
         int tryes = 100;
         while (!remote.getGameOver()) {
             Move move = new Move();

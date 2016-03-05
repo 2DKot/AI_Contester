@@ -26,34 +26,41 @@ import javax.json.JsonStructure;
  */
 public class Network implements INetwork {
 
-    private final String adress;
-    private final int port;
-    private final Socket socket;
+    private Socket socket;
+
     
-    
-    public Network(String adress, int port) throws IOException {
-        this.adress = adress;
-        this.port = port;
-        this.socket = new Socket(adress,port);
+    public Boolean connect(String adress, int port)
+    {
+        System.out.println("try connect to server");
+
+         try {
+                this.socket = new Socket(adress, port);
+                System.out.println("connect successful");
+            return true;
+            } catch (IOException ex) {
+                Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("connect fail");
+            return false;
+            }     
     }
 
     @Override
     public PlayerContext readSocket() {
-        
+
         String incomeJson = null;
-        
-        try {          
+
+        try {
             InputStream inputStream = socket.getInputStream();
             int avalible = inputStream.available();
             byte buf[] = new byte[avalible];
             inputStream.read(buf, 0, avalible);
-            incomeJson = new String(buf);      
-            
+            incomeJson = new String(buf);
+
         } catch (IOException ex) {
             Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
-        }                            
+        }
 
-        if (incomeJson == null) {
+        if (incomeJson == null || incomeJson.equals("")) {
             return null;
         }
 
@@ -65,7 +72,7 @@ public class Network implements INetwork {
         JsonStructure js = reader.read();
         JsonObject jo = (JsonObject) js;
 
-        float position_x = (float)jo.getJsonNumber("x").doubleValue();
+        float position_x = (float) jo.getJsonNumber("x").doubleValue();
 
         Player player = new Player(position_x);
 
@@ -81,7 +88,6 @@ public class Network implements INetwork {
 
         return pc;
     }
-    
 
     @Override
     public void writeSocket(Move move) {
@@ -103,8 +109,7 @@ public class Network implements INetwork {
         JsonObject value = Json.createObjectBuilder()
                 .add("direction", direction)
                 .build();
-        
-                  
+
         try {
             socket.getOutputStream().write(value.toString().getBytes());
         } catch (IOException ex) {

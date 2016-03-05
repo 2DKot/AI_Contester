@@ -5,7 +5,6 @@
  */
 package com.belocraft.network;
 
-import com.belocraft.gameplay.For_Test_Network;
 import com.belocraft.models.Move;
 import com.belocraft.models.Player;
 import com.belocraft.models.World;
@@ -20,7 +19,6 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.json.JsonStructure;
-import javax.net.ssl.SSLSocket;
 
 /**
  *
@@ -30,7 +28,7 @@ public class Network implements INetwork {
 
     private final String adress;
     private final int port;
-    private Socket socket;
+    private final Socket socket;
     
     
     public Network(String adress, int port) throws IOException {
@@ -80,8 +78,6 @@ public class Network implements INetwork {
         if (game_over) {
             pc.setGameOver();
         }
-
-      //  runner.run();
 
         return pc;
     }

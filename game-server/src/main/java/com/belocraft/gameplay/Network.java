@@ -19,7 +19,7 @@ import javax.json.JsonStructure;
  *
  * @author Eugene
  */
-public class Network implements For_Test_Network {
+public class Network {
 
     GameServer gameServer;
 
@@ -39,11 +39,10 @@ public class Network implements For_Test_Network {
         data = value.toString();
     }
 
-    public void requestInfo(Runner runner) {
-        runner.run();
+    public void requestInfo() {
+        //Здесь должно быть ожидания информации от других игроков
     }
-
-    @Override
+    
     public String readData() {
 
         if ("".equals(data)) {
@@ -55,7 +54,6 @@ public class Network implements For_Test_Network {
         return dataCopy;
     }
 
-    @Override
     public void sendData(String move) {
         InputStream is
                 = new ByteArrayInputStream(move.getBytes(Charset.defaultCharset()));
@@ -85,6 +83,8 @@ public class Network implements For_Test_Network {
         lstrategies[0] = new LocalStrategy(dir);
 
         gameServer.setLocalStrategy(lstrategies);
+        
+        //Здесь рассылка информации стратегии
     }
 
 }

@@ -5,8 +5,8 @@
  */
 package com.belocraft;
 
-import com.belocraft.gameplay.GameServer;
-import java.io.FileNotFoundException;
+import com.belocraft.network.Runner;
+import java.io.IOException;
 
 /**
  *
@@ -16,10 +16,17 @@ public class Main {
 
     /**
      * @param args the command line arguments
+     * @throws java.io.IOException
      */
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws IOException {
+        Runner runner;
 
-        GameServer game = new GameServer();
-        game.start();
+        if (args.length > 0) {
+            runner = new Runner(args[0], Integer.parseInt(args[1]));
+        } else {
+            runner = new Runner("127.0.0.1", 2550);
+        }
+
+        runner.run();
     }
 }

@@ -7,10 +7,8 @@ package com.belocraft.gameplay;
 
 import com.belocraft.models.Player;
 import com.belocraft.models.World;
-import com.belocraft.network.Runner;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
@@ -24,19 +22,16 @@ public class GameServer {
 
     private LocalStrategy[] lstrategies;
     private World world;
-    private Processor processor;
-    private Network network;
+    private final Processor processor;
+    private final Network network;
     private Boolean all_readed;
-    private Boolean game_over;
-    private ArrayList map_history;
-
-    private Runner runner;
+    private final Boolean game_over;
+    private final ArrayList map_history;   
 
     public GameServer() {
         this.processor = new Processor();
         this.all_readed = true;
-        this.network = new com.belocraft.gameplay.Network(this);
-        this.runner = new Runner(network);
+        this.network = new com.belocraft.gameplay.Network(this);        
         this.all_readed = false;
         Player[] players = new Player[1];
         players[0] = new Player(15);
@@ -68,7 +63,7 @@ public class GameServer {
                 ticks--;
                 all_readed = false;
             } else {
-                network.requestInfo(runner);
+                network.requestInfo();
             }
 
             network.sendData();

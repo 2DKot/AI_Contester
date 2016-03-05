@@ -7,7 +7,6 @@ package com.belocraft.network;
 
 import com.belocraft.MyStrategy;
 import com.belocraft.Strategy;
-import com.belocraft.gameplay.For_Test_Network;
 import com.belocraft.models.Move;
 import java.io.IOException;
 
@@ -17,13 +16,11 @@ import java.io.IOException;
  */
 public class Runner {
 
-    For_Test_Network network;
     IRemoteProcess remote;
     Strategy strategy = new MyStrategy();
 
-    public Runner(For_Test_Network net) throws IOException {
-        this.network = net;
-        remote = new RemoteProcess("127.0.0.1",2550);
+    public Runner(String adress, int port) throws IOException {
+        remote = new RemoteProcess(adress, port);
     }
 
     public void run() {

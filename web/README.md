@@ -20,5 +20,5 @@ gulp clean
 gulp build-app
 ```
 #Configuration
-You can change ip or port of backend server in config/config.json file.
+You can change ip or port of backend server in config/config.js file.
 To see these changes you only need to refresh page in your browser.

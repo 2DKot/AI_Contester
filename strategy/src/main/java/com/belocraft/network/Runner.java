@@ -8,7 +8,6 @@ package com.belocraft.network;
 import com.belocraft.MyStrategy;
 import com.belocraft.Strategy;
 import com.belocraft.models.Move;
-import java.io.IOException;
 
 /**
  *
@@ -29,15 +28,16 @@ public class Runner {
 
     public void run() {
         
-        int tryes = 100;
+        int tryes = 1000;
         while (!remote.getGameOver()) {
             Move move = new Move();
             PlayerContext context = remote.readPlayerContext();
             if (context == null) {
+        //        tryes--;
                 if (tryes > 1) {
                     continue;
                 } else {
-                    return;
+                    break;
                 }
             }
             strategy.move(context.getPlayer(), context.getWorld(), move);

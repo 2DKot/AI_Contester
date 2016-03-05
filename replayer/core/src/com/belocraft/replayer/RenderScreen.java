@@ -20,9 +20,9 @@ import java.util.ArrayList;
  */
 public class RenderScreen implements Screen {
 
-    private SpriteBatch batch;
-    private BitmapFont font;
-    private Maps objsRender;
+    private final SpriteBatch batch;
+    private final BitmapFont font;
+    private final Maps objsRender;
 
     public RenderScreen(Maps objsRender) {
         batch = new SpriteBatch();
@@ -49,9 +49,11 @@ public class RenderScreen implements Screen {
 
         font.draw(batch, String.valueOf(frame), 0, 480);
 
-        ObjectToRender obj = objsRender.getNextObject(delta);
+        ArrayList<ObjectToRender> objs = objsRender.getNextObject(delta);
 
+        for (ObjectToRender obj : objs){        
         batch.draw(obj.getTexture(), obj.getX(), obj.getY());
+        }
 
         batch.end();
 

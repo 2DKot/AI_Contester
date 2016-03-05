@@ -13,11 +13,11 @@ import com.belocraft.models.Move;
  */
 public class RemoteProcess {
 
-    Network network;
-    Boolean game_over = false;
+    private final Network network;
+    private Boolean gameOver = false;
 
     public RemoteProcess(){
-        network = new Network();
+        network = new Network(this);
     }
     
     public Boolean connect(String adress, int port){
@@ -25,13 +25,17 @@ public class RemoteProcess {
     }
     
     public Boolean getGameOver() {
-        return game_over;
+        return gameOver;
+    }
+    
+    public void setGameOver(Boolean gameOver) {
+        this.gameOver = gameOver;
     }
     
     public PlayerContext readPlayerContext() {
         PlayerContext context = network.readSocket();
         if (context != null) {
-            this.game_over = context.getGameOver();
+            this.gameOver = context.getGameOver();
         }
         return context;
     }

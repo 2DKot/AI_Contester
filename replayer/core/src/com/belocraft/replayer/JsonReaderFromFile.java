@@ -18,6 +18,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import javax.json.JsonArray;
 
 /**
@@ -27,8 +28,20 @@ import javax.json.JsonArray;
 public class JsonReaderFromFile {
 
     private Maps map;
+    private final ArrayList<Color> colors;
+    
+    JsonReaderFromFile()
+    {
+        colors = new ArrayList<Color>();
+    }
 
     public Maps ReadJson(float speed) throws IOException {
+        
+        colors.add(Color.RED);
+        colors.add(Color.GREEN);
+        colors.add(Color.BLUE);
+        colors.add(Color.YELLOW);
+        
         map = new Maps(speed);
         String income_json = "";
 
@@ -48,10 +61,16 @@ public class JsonReaderFromFile {
 
         Gdx.app.log("J", String.valueOf(jo.size()));
 
-        for (int i = 0; i < jo.size(); i++) {
-            buildObject((float) jo.getJsonObject(i)
-                    .getJsonArray("players").getJsonObject(0)
-                    .getJsonNumber("x").doubleValue());
+        for (int i = 0; i < jo.size(); i++)         
+        {
+            JsonArray array = jo.getJsonObject(i).getJsonArray("players");
+            ArrayList<ObjectToRender> objs = new ArrayList<ObjectToRender>();
+            for (int j = 0; j < array.size(); j++){
+            objs.add(buildObject((float)array.getJsonObject(j)
+                    .getJsonNumber("x").doubleValue(),j));
+            }
+            
+            map.addToArrayList(objs);
         }
 
         return map;
@@ -59,16 +78,15 @@ public class JsonReaderFromFile {
 
     int koef = 10;
 
-    void buildObject(float X) {
+    ObjectToRender buildObject(float X, int i) {
         Pixmap pixCricle = new Pixmap(25, 25, Pixmap.Format.RGBA8888);
-        pixCricle.setColor(Color.GREEN);
+        pixCricle.setColor(colors.get(i));
         pixCricle.fillCircle(10, 10, 10);
         ObjectToRender objRender
-                = new ObjectToRender(X * 45, 240, new Texture(pixCricle));
-
-        map.addToArrayList(objRender);
-
+                = new ObjectToRender(X * 45, 240, new Texture(pixCricle));        
         pixCricle.dispose();
+        
+        return objRender;
     }
 
 }

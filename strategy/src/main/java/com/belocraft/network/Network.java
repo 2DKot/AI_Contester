@@ -27,6 +27,11 @@ import javax.json.JsonStructure;
 public class Network implements INetwork {
 
     private Socket socket;
+    private RemoteProcess remote;
+
+    public Network(RemoteProcess remoteProcess) {
+        this.remote = remoteProcess;
+    }
 
     
     public Boolean connect(String adress, int port)
@@ -58,6 +63,7 @@ public class Network implements INetwork {
 
         } catch (IOException ex) {
             Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
+            remote.setGameOver(true);
         }
 
         if (incomeJson == null || incomeJson.equals("")) {
@@ -114,6 +120,7 @@ public class Network implements INetwork {
             socket.getOutputStream().write(value.toString().getBytes());
         } catch (IOException ex) {
             Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
+            remote.setGameOver(true);
         }
     }
 

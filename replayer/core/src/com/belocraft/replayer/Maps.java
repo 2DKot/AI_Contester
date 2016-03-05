@@ -13,27 +13,27 @@ import java.util.ArrayList;
  */
 public class Maps {
 
-    private ArrayList<ObjectToRender> animation;
-    private ObjectToRender lastObj;
+    private final ArrayList<ArrayList<ObjectToRender>> animation;
+    private ArrayList<ObjectToRender> lastObj;
     private float temp = 1;
     private float speed = 1;
 
     public Maps(float speed) {
-        this.animation = new ArrayList<ObjectToRender>();
+        this.animation = new ArrayList<ArrayList<ObjectToRender>>();
         this.speed = speed;
     }
 
-    public ArrayList<ObjectToRender> getAnimation() {
+    public ArrayList<ArrayList<ObjectToRender>> getAnimation() {
         return this.animation;
     }
 
-    public void addToArrayList(ObjectToRender obj) {
+    public void addToArrayList(ArrayList<ObjectToRender> obj) {
         this.animation.add(obj);
     }
 
-    public ObjectToRender getNextObject(float delta) {
+    public ArrayList<ObjectToRender> getNextObject(float delta) {
         if (!animation.isEmpty() && temp >= this.speed) {
-            ObjectToRender value = animation.get(0);
+            ArrayList<ObjectToRender> value = animation.get(0);
             animation.remove(0);
             lastObj = value;
             temp = 0;

@@ -6,7 +6,7 @@
 "use strict";
 import * as React from 'react';
 
-var endpoint = "http://" + config.backend.ip + ":" + config.backend.port;
+var endpoint = "http://" + config.backend.ip + ":" + config.backend.port + "/";
 
 export interface ISignupProps {
     

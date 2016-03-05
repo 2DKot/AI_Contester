@@ -6,7 +6,7 @@
 "use strict";
 import * as React from 'react';
 
-var endpoint = "http://" + config.backend.ip + ":" + config.backend.port;
+var endpoint = "http://" + config.backend.ip + ":" + config.backend.port + "/";
 
 function base64encode(str) {
     //from http://www.manhunter.ru/webmaster/423_funkcii_base64_na_javascript.html

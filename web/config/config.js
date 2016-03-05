@@ -1,6 +1,6 @@
 var config = {
     backend: {
-        ip: "127.0.2.11",
-        port: "30020"
+        ip: "127.0.0.1",
+        port: "3000"
     }
 }

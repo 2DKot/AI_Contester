@@ -5,6 +5,7 @@
  */
 package com.belocraft.gameplay;
 
+import com.belocraft.Main;
 import com.belocraft.models.Player;
 import com.belocraft.models.World;
 import java.io.FileNotFoundException;
@@ -26,18 +27,18 @@ public class GameServer {
     private final Processor processor;
     private final Network network;
     private Boolean allReaded;
-    private Boolean gameOver;
-    private final ArrayList map_history;   
+    private Boolean gameOver; 
 
     public GameServer(int port) throws IOException {
         this.processor = new Processor();        
         this.network = new com.belocraft.gameplay.Network(this,port);        
         this.allReaded = false;
-        Player[] players = new Player[1];
-        players[0] = new Player(15);
+        Player[] players = new Player[Main.getStrategyCount()];
+        for (int i = 0; i < players.length; i++) {
+            players[i] = new Player(15);
+        }
         this.world = new World(players);
-        this.gameOver = false;
-        this.map_history = new ArrayList();
+        this.gameOver = false;        
     }
 
     public void setLocalStrategy(LocalStrategy[] lstrategy) {
@@ -54,18 +55,23 @@ public class GameServer {
     }
 
     public void start() throws FileNotFoundException, IOException {
-        int ticks = 20;
         
+        JsonResult jsonResult = new JsonResult();
+        
+        int ticks = Main.getTicksCount();
+ 
         network.waitConnection();
 
         while (ticks != 0) {
             if (allReaded) {
                 world = processor.tick(lstrategies, world);
-                addX(world.getPlayers()[0].getPositionX());
+                Player[] players = world.getPlayers();
+                for (int i = 0; i < players.length; i++) {
+                    jsonResult.addX(players[i].getPositionX(),i);
+                }
                 ticks--;
                 allReaded = false;
-            } else 
-            {
+            } else {
                 network.sendData();
                 network.readData();
             }           
@@ -74,28 +80,6 @@ public class GameServer {
         this.gameOver = true;
         network.sendData();
 
-        String js = writeJson();
-        try (PrintWriter out = new PrintWriter("result.json")) {
-            out.write(js);
-            out.flush();
-        }
-    }
-
-    void addX(float x) {
-        map_history.add(x);
-    }
-
-    public String writeJson() {
-        JsonArrayBuilder array = Json.createArrayBuilder();
-        for (int i = 0; i < map_history.size(); i++) {
-            JsonObjectBuilder value = Json.createObjectBuilder();
-            JsonArrayBuilder array_value = Json.createArrayBuilder();
-            value.add("tick", i);            
-            array_value.add(Json.createObjectBuilder()
-                    .add("x", (float) map_history.get(i)));
-            value.add("players", array_value);
-            array.add(value);
-        }
-        return array.build().toString();
+        jsonResult.writeJson();        
     }
 }

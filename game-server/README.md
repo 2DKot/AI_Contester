@@ -1,3 +1,5 @@
+Constants, such as the number of strategies or the number of ticks edit in '...\src\main\java\com\belocraft\Main.java'
+
 You don't need to install. If you have a specific path to the JDK , uncomment the line in 'gradle.properties' file.
 
 Then, run cmd or powershell 'game-server' folder and type:

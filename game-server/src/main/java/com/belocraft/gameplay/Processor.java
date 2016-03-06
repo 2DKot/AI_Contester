@@ -16,7 +16,7 @@ public class Processor {
 
     public World tick(LocalStrategy[] strategies, World world) {
         for (int i = 0; i < strategies.length; i++) {
-            switch (strategies[0].getDirection()) {
+            switch (strategies[i].getDirection()) {
                 case left:
                     if (world.getPlayers()[i].getPositionX() > 0.5F) {
                         world.getPlayers()[i]

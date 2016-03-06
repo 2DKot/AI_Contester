@@ -5,13 +5,16 @@
  */
 package com.belocraft.gameplay;
 
+import com.belocraft.Main;
 import com.belocraft.models.Direction;
+import com.belocraft.models.Player;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
@@ -25,26 +28,41 @@ public class Network {
 
     private GameServer gameServer;
     private ServerSocket server;
-    private Socket socket;
+    private ArrayList<Socket> socket;
     private Boolean sendContext;
 
     public Network(GameServer server, int port) throws IOException {
         this.server = new ServerSocket(port);
         this.gameServer = server;
         this.sendContext = false;
+        this.socket = new ArrayList<>();
     }
 
     public void sendData() throws IOException {
 
         if (!sendContext) {
-            float x = gameServer.getWorld().getPlayers()[0].getPositionX();
 
-            JsonObject value = Json.createObjectBuilder()
-                    .add("x", x)
-                    .add("game_over", gameServer.getGameOver())
-                    .build();
+            Player[] players = gameServer.getWorld().getPlayers();
 
-            socket.getOutputStream().write(value.toString().getBytes());
+            for (int i = 0; i < players.length; i++) {
+
+                if (socket.get(i) == null) {
+                    continue;
+                }
+
+                float x = players[i].getPositionX();
+
+                JsonObject value = Json.createObjectBuilder()
+                        .add("x", x)
+                        .add("game_over", gameServer.getGameOver())
+                        .build();
+
+                try{
+                socket.get(i).getOutputStream().write(value.toString().getBytes());
+                }catch(Exception ex){
+                    socket.set(i, null);
+                }
+            }
         }
 
         this.sendContext = true;
@@ -52,55 +70,72 @@ public class Network {
 
     public void waitConnection() throws IOException {
         System.out.println("wait conection user");
-        socket = server.accept();
-        System.out.println("user connected");
+        for (int i = 0; i < Main.getStrategyCount(); i++) {
+            socket.add(server.accept());
+            System.out.println("user " + String.valueOf(i+1) + " connected");
+        }
     }
-    
-    public void readData() throws IOException {
 
-        //читаем нужный из сети
-        String move;
+    public void readData() {
 
-        InputStream inputStream = socket.getInputStream();
-        byte[] buf = new byte[inputStream.available()];
-        inputStream.read(buf);
-        move = new String(buf);
-
-        InputStream is
-                = new ByteArrayInputStream(move.getBytes(Charset.defaultCharset()));
-
-        if (move.equals("")){
-            return;
-        }
+        LocalStrategy[] lstrategies = new LocalStrategy[Main.getStrategyCount()];
         
-        JsonReader reader = Json.createReader(is);
+        int i = 0;
+        while(i < Main.getStrategyCount()) {
 
-        JsonStructure js = reader.read();
-        JsonObject jo = (JsonObject) js;
+            if (socket.get(i) == null) {
+                i++;
+                continue;                
+            }
 
-        String direction = jo.getString("direction");
+            String move;
+            
+            try {
+                InputStream inputStream = socket.get(i).getInputStream();
+                byte[] buf = new byte[inputStream.available()];
+                inputStream.read(buf);
+                move = new String(buf);
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+                socket.set(i, null);
+                i++;
+                continue;
+            }
+            InputStream is
+                    = new ByteArrayInputStream(move.getBytes(Charset.defaultCharset()));
 
-        Direction dir;
+            if (move.equals("")) {                
+                continue;
+            }
 
-        switch (direction) {
-            case "left":
-                dir = Direction.left;
-                break;
-            case "right":
-                dir = Direction.right;
-                break;
-            default:
-                dir = Direction.none;
-                break;
+            JsonReader reader = Json.createReader(is);
+
+            JsonStructure js = reader.read();
+            JsonObject jo = (JsonObject) js;
+
+            String direction = jo.getString("direction");
+
+            Direction dir;
+
+            switch (direction) {
+                case "left":
+                    dir = Direction.left;
+                    break;
+                case "right":
+                    dir = Direction.right;
+                    break;
+                default:
+                    dir = Direction.none;
+                    break;
+            }
+
+            lstrategies[i] = new LocalStrategy(dir);
+            i++;
         }
-
-        LocalStrategy[] lstrategies = new LocalStrategy[1];
-        lstrategies[0] = new LocalStrategy(dir);
 
         this.sendContext = false;
 
         gameServer.setLocalStrategy(lstrategies);
 
     }
-
 }

@@ -1,13 +1,7 @@
-/// <reference path="../../typings/node/node.d.ts"/>
-/// <reference path="../../typings/express/express.d.ts"/>
-/// <reference path="../../typings/mongoose/mongoose.d.ts"/>
-/// <reference path="../../typings/oauth2-server/oauth2-server.d.ts"/>
+"use strict";
 
-import mongoose = require('mongoose');
-
-var conn: mongoose.Connection = require('./mongoose_connection');
-
-import Schema = mongoose.Schema;
+import {connection} from './mongoose_connection';
+import {Schema, Document} from 'mongoose';
 
 var OAuthAccessTokensSchema: Schema = new Schema({
     accessToken: { type: String },
@@ -35,9 +29,13 @@ var OAuthUsersSchema: Schema = new Schema({
     email: { type: String, default: '' }
 });
 
-module.exports.AccessTokens = conn.model('OAuthAccessTokens', OAuthAccessTokensSchema);
-module.exports.RefreshTokens = conn.model('OAuthRefreshTokens', OAuthRefreshTokensSchema);
-module.exports.Clients = conn.model('OAuthClients', OAuthClientsSchema);
-module.exports.Users = conn.model('Users', OAuthUsersSchema);
+export interface IUser extends Document {
+    username: string;
+    password: string;
+    email: string;
+}
 
-export = module.exports;
+export var AccessTokenModel = connection.model('OAuthAccessTokens', OAuthAccessTokensSchema);
+export var RefreshTokenModel = connection.model('OAuthRefreshTokens', OAuthRefreshTokensSchema);
+export var ClientModel = connection.model('OAuthClients', OAuthClientsSchema);
+export var UserModel = connection.model<IUser>('Users', OAuthUsersSchema);

@@ -1,8 +1,8 @@
-/// <reference path="../typings/node/node.d.ts"/>
-/// <reference path="../typings/express/express.d.ts"/>
-/// <reference path="../typings/mongoose/mongoose.d.ts"/>
-/// <reference path="../typings/oauth2-server/oauth2-server.d.ts"/>
-/// <reference path="../typings/body-parser/body-parser.d.ts"/>
+/// <reference path="../typings/express/express.d.ts" />
+/// <reference path="../typings/body-parser/body-parser.d.ts" />
+/// <reference path="../typings/oauth2-server/oauth2-server.d.ts" />
+/// <reference path="../typings/mongoose/mongoose.d.ts" />
+
 "use strict";
 
 import express = require('express');
@@ -17,6 +17,9 @@ app.use(cors);
 
 var registration: express.Router = require('./registration');
 app.use(registration);
+
+var strategies: express.Router = require('./strategies');
+app.use('/strategies/', strategies);
 
 var router: express.Router = express.Router();
 
@@ -39,45 +42,24 @@ router.post('/test', function(req: express.Request, res: express.Response, next)
 app.use(router);
 
 
-
-import oauthserver = require('oauth2-server');
-
-var oauth = oauthserver({
-  model: require('./oauth_model'),
-  grants: ['password'],
-  debug: true
-});
+import {oauth, getUser, AuthorisedRequest} from './oauth';
 
 app.all('/oauth/token', oauth.grant());
 
-import mongoose = require('mongoose');
-import Model = mongoose.Model;
-var userModel = require('./model/oauth_models').Users;
+import {Model} from 'mongoose';
+import {UserModel} from './model/oauth_models';
+import Response = express.Response;
 
-app.all('/secret', oauth.authorise(), function (req, res) {
-  console.log('user:', req.user);
-  userModel.findOne({ _id: req.user.id }, function(err, user){
-      if (err) {
-          res.status(500).json({
-              message: "Database error."
-          });
-          throw err;
-          return;
-      };
-      if (!user) {
-          res.status(404).json({
-              message: "User with id " + req.user.id + " wasn't found."
-          });
-          return;
-      }
-      res.status(200).json({
-          message: "Юзер " + user.username + " c почтой " + user.email + " достиг секретного места!"
-      });
-  });
+app.all('/secret', getUser, function(req: AuthorisedRequest, res: Response) {
+    console.log('user:');
+    console.log(req.user);
+    res.status(200).json({
+        message: "Юзер " + req.user.username + " c почтой " + req.user.email + " достиг секретного места!"
+    });
 });
 
 app.use(oauth.errorHandler());
 
 app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
+  console.log('Backend-server listening on port 3000!');
 });

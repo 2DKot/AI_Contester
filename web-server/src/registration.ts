@@ -1,15 +1,9 @@
-/// <reference path="../typings/node/node.d.ts"/>
-/// <reference path="../typings/express/express.d.ts"/>
-/// <reference path="../typings/mongoose/mongoose.d.ts"/>
-/// <reference path="../typings/oauth2-server/oauth2-server.d.ts"/>
-/// <reference path="../typings/body-parser/body-parser.d.ts"/>
 "use strict";
 
-import express = require('express');
-import Request = express.Request;
-import Response = express.Response;
-var userModel = require('./model/oauth_models').Users;
-var router: express.Router = express.Router();
+import {Request, Response, Router} from 'express';
+import {UserModel} from './model/oauth_models';
+var router = Router();
+module.exports = router;
 
 router.post("/users", function(req: Request, res: Response, next) {
     function paramNotFound(paramName: string) {
@@ -34,7 +28,7 @@ router.post("/users", function(req: Request, res: Response, next) {
         return;
     };
     //TODO: username || email
-    userModel.findOne({ $or: [{username: username}, {email: email}] }, function(err, user) {
+    UserModel.findOne({ $or: [{username: username}, {email: email}] }, function(err, user) {
         console.log(user);
         if(err) {
             res.status(500).json({
@@ -55,7 +49,7 @@ router.post("/users", function(req: Request, res: Response, next) {
             });
             return;
         }
-        var user = new userModel({
+        var user = new UserModel({
             username: username,
             password: password,
             email: email
@@ -74,5 +68,3 @@ router.post("/users", function(req: Request, res: Response, next) {
         });
     });
 });
-
-module.exports = router;

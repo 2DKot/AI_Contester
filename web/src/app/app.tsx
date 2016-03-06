@@ -6,6 +6,7 @@ import * as ReactDom from 'react-dom';
 import {Hello, Secret} from './test';
 import {Login} from './login'
 import {Signup} from './signup'
+import {SendStrategy} from './sendStrategy'
 
 interface IAppProps {
 }
@@ -33,8 +34,11 @@ class App extends React.Component<IAppProps, IAppState> {
             <div>
                 <Hello/>
                 
-                {this.state.accessToken ? 
-                    <Secret token = {this.state.accessToken}/> :
+                {this.state.accessToken ?
+                    <div>
+                        <Secret token = {this.state.accessToken}/>
+                        <SendStrategy token = {this.state.accessToken}/>
+                    </div>:
                     <div>
                         <Signup/>
                         <Login onLogin={token => this.handleLogin(token)}/>

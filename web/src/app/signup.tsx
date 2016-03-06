@@ -64,7 +64,7 @@ export class Signup extends React.Component<ISignupProps, ISignupState> {
             .then(response => response.json())
             .then(data => {
                 console.log(data);
-               this.setState({ statusMessage: data.message }); 
+                this.setState({ statusMessage: data.message });
             });
     }
     render() {

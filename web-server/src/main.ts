@@ -1,3 +1,8 @@
+/// <reference path="../typings/express/express.d.ts" />
+/// <reference path="../typings/body-parser/body-parser.d.ts" />
+/// <reference path="../typings/oauth2-server/oauth2-server.d.ts" />
+/// <reference path="../typings/mongoose/mongoose.d.ts" />
+
 "use strict";
 
 import express = require('express');
@@ -7,11 +12,14 @@ import bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-import {cors} from './cors';
+var cors: express.Router = require('./cors');
 app.use(cors);
 
 var registration: express.Router = require('./registration');
 app.use(registration);
+
+var strategies: express.Router = require('./strategies');
+app.use('/strategies/', strategies);
 
 var router: express.Router = express.Router();
 

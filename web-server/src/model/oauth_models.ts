@@ -1,10 +1,7 @@
 "use strict";
 
-import mongoose = require('mongoose');
-
-var conn: mongoose.Connection = require('./mongoose_connection');
-
-import Schema = mongoose.Schema;
+import {connection} from './mongoose_connection';
+import {Schema, Document} from 'mongoose';
 
 var OAuthAccessTokensSchema: Schema = new Schema({
     accessToken: { type: String },
@@ -32,13 +29,13 @@ var OAuthUsersSchema: Schema = new Schema({
     email: { type: String, default: '' }
 });
 
-export interface IUser extends mongoose.Document {
+export interface IUser extends Document {
     username: string;
     password: string;
     email: string;
 }
 
-export var AccessTokenModel = conn.model('OAuthAccessTokens', OAuthAccessTokensSchema);
-export var RefreshTokenModel = conn.model('OAuthRefreshTokens', OAuthRefreshTokensSchema);
-export var ClientModel = conn.model('OAuthClients', OAuthClientsSchema);
-export var UserModel = conn.model<IUser>('Users', OAuthUsersSchema);
+export var AccessTokenModel = connection.model('OAuthAccessTokens', OAuthAccessTokensSchema);
+export var RefreshTokenModel = connection.model('OAuthRefreshTokens', OAuthRefreshTokensSchema);
+export var ClientModel = connection.model('OAuthClients', OAuthClientsSchema);
+export var UserModel = connection.model<IUser>('Users', OAuthUsersSchema);

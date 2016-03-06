@@ -3,6 +3,7 @@
 import {Request, Response, Router} from 'express';
 import {UserModel} from './model/oauth_models';
 var router = Router();
+module.exports = router;
 
 router.post("/users", function(req: Request, res: Response, next) {
     function paramNotFound(paramName: string) {
@@ -67,5 +68,3 @@ router.post("/users", function(req: Request, res: Response, next) {
         });
     });
 });
-
-module.exports = router;

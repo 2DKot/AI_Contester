@@ -1,9 +1,7 @@
 "use strict";
 
-import mongoose = require('mongoose');
-
 import {connection} from "./mongoose_connection";
-import Schema = mongoose.Schema;
+import {Schema, Document} from 'mongoose';
 
 
 var StrategySchema: Schema = new Schema({
@@ -11,9 +9,9 @@ var StrategySchema: Schema = new Schema({
     source: { type: String },
 });
 
-export interface IStrategy extends mongoose.Document {
+export interface IStrategy extends Document {
     userId: string;
     source: string;
 }
 
-export var Strategy = connection.model<IStrategy>('Users', StrategySchema);
+export var StrategyModel = connection.model<IStrategy>('Users', StrategySchema);

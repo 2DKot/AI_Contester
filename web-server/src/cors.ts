@@ -2,7 +2,8 @@
 
 import {Request, Response, Router} from 'express';
 
-export var cors: Router = Router();
+var cors: Router = Router();
+module.exports = cors;
 
 cors.all("/*", function(req: Request, res: Response, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');

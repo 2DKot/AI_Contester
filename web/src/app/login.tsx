@@ -1,9 +1,12 @@
 /// <reference path="../../typings/react/react.d.ts"/>
 /// <reference path="../../typings/react/react-dom.d.ts"/>
 /// <reference path="../../typings/whatwg-fetch/whatwg-fetch.d.ts"/>
+/// <reference path="./config.d.ts"/>
 
 "use strict";
 import * as React from 'react';
+
+var endpoint = "http://" + config.backend.ip + ":" + config.backend.port + "/";
 
 function base64encode(str) {
     //from http://www.manhunter.ru/webmaster/423_funkcii_base64_na_javascript.html
@@ -65,7 +68,7 @@ export class Login extends React.Component<ILoginProps, ILoginState> {
         }
         var authString = 'Basic ' + base64encode('superID:superSecret');
         var bodyString = 'grant_type=password&username='+this.state.username+'&password='+this.state.password;
-        fetch(window.location.origin + ':3000/oauth/token/', {
+        fetch(endpoint + 'oauth/token/', {
             method: 'post',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',

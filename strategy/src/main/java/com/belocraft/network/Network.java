@@ -5,13 +5,16 @@
  */
 package com.belocraft.network;
 
-import com.belocraft.gameplay.For_Test_Network;
 import com.belocraft.models.Move;
 import com.belocraft.models.Player;
 import com.belocraft.models.World;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.Socket;
 import java.nio.charset.Charset;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
@@ -23,31 +26,53 @@ import javax.json.JsonStructure;
  */
 public class Network implements INetwork {
 
-    For_Test_Network network;
-    Runner runner;
+    private Socket socket;
 
-    public Network(For_Test_Network net, Runner runner) {
-        this.network = net;
-        this.runner = runner;
+    
+    public Boolean connect(String adress, int port)
+    {
+        System.out.println("try connect to server");
+
+         try {
+                this.socket = new Socket(adress, port);
+                System.out.println("connect successful");
+            return true;
+            } catch (IOException ex) {
+                Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("connect fail");
+            return false;
+            }     
     }
 
     @Override
     public PlayerContext readSocket() {
-        String income_json = network.readData();
 
-        if (income_json == null) {
+        String incomeJson = null;
+
+        try {
+            InputStream inputStream = socket.getInputStream();
+            int avalible = inputStream.available();
+            byte buf[] = new byte[avalible];
+            inputStream.read(buf, 0, avalible);
+            incomeJson = new String(buf);
+
+        } catch (IOException ex) {
+            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (incomeJson == null || incomeJson.equals("")) {
             return null;
         }
 
         InputStream is
-                = new ByteArrayInputStream(income_json.getBytes(Charset.defaultCharset()));
+                = new ByteArrayInputStream(incomeJson.getBytes(Charset.defaultCharset()));
 
         JsonReader reader = Json.createReader(is);
 
         JsonStructure js = reader.read();
         JsonObject jo = (JsonObject) js;
 
-        float position_x = (float)jo.getJsonNumber("x").doubleValue();
+        float position_x = (float) jo.getJsonNumber("x").doubleValue();
 
         Player player = new Player(position_x);
 
@@ -60,8 +85,6 @@ public class Network implements INetwork {
         if (game_over) {
             pc.setGameOver();
         }
-
-        runner.run();
 
         return pc;
     }
@@ -87,7 +110,11 @@ public class Network implements INetwork {
                 .add("direction", direction)
                 .build();
 
-        network.sendData(value.toString());
+        try {
+            socket.getOutputStream().write(value.toString().getBytes());
+        } catch (IOException ex) {
+            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

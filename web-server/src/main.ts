@@ -46,6 +46,14 @@ import {oauth, getUser, AuthorisedRequest} from './oauth';
 
 app.all('/oauth/token', oauth.grant());
 
+app.use(function(err: any, req: express.Request, res: Response, next: express.NextFunction) {
+    if(!err || err.name !== "OAuth2Error") {
+        next();
+        return;
+    }
+    res.status(err.code).json(err);
+})
+
 import {Model} from 'mongoose';
 import {UserModel} from './model/oauth_models';
 import Response = express.Response;

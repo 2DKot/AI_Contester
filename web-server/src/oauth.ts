@@ -5,7 +5,8 @@ import oauthserver = require('oauth2-server');
 export var oauth = oauthserver({
   model: require('./oauth_model'),
   grants: ['password'],
-  debug: true
+  debug: true,
+  passthroughErrors: false
 });
 
 

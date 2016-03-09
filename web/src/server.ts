@@ -1,11 +1,14 @@
 /// <reference path="../typings/node/node.d.ts"/>
 /// <reference path="../typings/connect/connect.d.ts"/>
 /// <reference path="../typings/serve-static/serve-static.d.ts"/>
+/// <reference path="../typings/source-map-support/source-map-support.d.ts"/>
 
 import * as Connect from 'connect';
 
 var connect = require('connect'),
     serveStatic = require('serve-static');
+
+require('source-map-support').install();
 
 var app: Connect.Server = connect();
 

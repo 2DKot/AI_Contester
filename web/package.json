@@ -19,6 +19,7 @@
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "serve-static": "^1.10.2",
+    "source-map-support": "^0.4.0",
     "vinyl-source-stream": "^1.1.0",
     "whatwg-fetch": "^0.11.0"
   },
@@ -30,5 +31,8 @@
   "browserify-shim": {
     "react": "global:React",
     "react-dom": "global:ReactDOM"
+  },
+  "devDependencies": {
+    "gulp-sourcemaps": "^1.6.0"
   }
 }

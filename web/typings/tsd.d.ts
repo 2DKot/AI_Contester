@@ -16,3 +16,5 @@
 /// <reference path="mime/mime.d.ts" />
 /// <reference path="serve-static/serve-static.d.ts" />
 /// <reference path="whatwg-fetch/whatwg-fetch.d.ts" />
+/// <reference path="gulp-sourcemaps/gulp-sourcemaps.d.ts" />
+/// <reference path="source-map-support/source-map-support.d.ts" />

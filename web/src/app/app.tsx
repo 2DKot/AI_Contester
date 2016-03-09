@@ -8,25 +8,57 @@ import {Login} from './login'
 import {Signup} from './signup'
 import {SendStrategy} from './sendStrategy'
 
+var endpoint = "http://" + config.backend.ip + ":" + config.backend.port + "/";
+
 interface IAppProps {
 }
 
 interface IAppState {
-    accessToken: string
+    accessToken?: string
 }
 
 class App extends React.Component<IAppProps, IAppState> {
     constructor(props: IAppProps) {
         super(props);
-        this.state = { accessToken: "" };
+        this.state = {};
+    }
+
+    componentDidMount() {
+        var token = localStorage.getItem("token");
+        if (token) {
+            fetch(endpoint + 'secret/', {
+                method: 'post',
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            })
+                .then(res => {
+                    if (res.status === 200) {
+                        this.setState({ accessToken: token });
+                    }
+                    else if (res.status == 401) {
+                        localStorage.removeItem("token");
+                        return;
+                    }
+                    else {
+                        console.log("Unexpected code: " + res.status);
+                    }
+                })
+                .catch(ex => {
+                    console.log('parsing failed', ex);
+                });
+
+        }
     }
     
     handleLogin(accessToken: string){
         this.setState({accessToken: accessToken});
+        localStorage.setItem("token", accessToken);
     }
     
     logout(){
-        this.setState({accessToken: ""});
+        this.setState({ accessToken: "" });
+        localStorage.removeItem("token");
     }
     
     render() {

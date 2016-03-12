@@ -15,7 +15,7 @@ import java.io.IOException;
  */
 public class Main {
 
-    private static int strategyCount = 4;
+    private static int strategyCount = 2;
     private static int ticksCount = 200;
 
     /**
@@ -33,8 +33,10 @@ public class Main {
             
         }
 		
-        GameServer game = new GameServer(2550);
+        GameServer game = new GameServer();
         game.start();
+        
+        System.out.print("[END]");
     }
 
     public static int getStrategyCount() {

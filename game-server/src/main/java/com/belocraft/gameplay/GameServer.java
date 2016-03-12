@@ -23,9 +23,9 @@ public class GameServer {
     private Boolean allReaded;
     private Boolean gameOver; 
 
-    public GameServer(int port) throws IOException {
+    public GameServer() {
         this.processor = new Processor();        
-        this.network = new com.belocraft.gameplay.Network(this,port);        
+        this.network = new com.belocraft.gameplay.Network(this);        
         this.allReaded = false;
         Player[] players = new Player[Main.getStrategyCount()];
         for (int i = 0; i < players.length; i++) {

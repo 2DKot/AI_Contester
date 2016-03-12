@@ -26,13 +26,23 @@ import javax.json.JsonStructure;
  */
 public class Network {
 
-    private GameServer gameServer;
+    private final GameServer gameServer;
     private ServerSocket server;
-    private ArrayList<Socket> socket;
+    private final ArrayList<Socket> socket;
     private Boolean sendContext;
 
-    public Network(GameServer server, int port) throws IOException {
-        this.server = new ServerSocket(port);
+    public Network(GameServer server) {
+
+        int port = 25;
+        while (true) {
+            try {
+                this.server = new ServerSocket(port);
+                System.out.println("[PORT] " + port);
+                break;
+            } catch (Exception ex) {
+                port++;
+            }
+        }
         this.gameServer = server;
         this.sendContext = false;
         this.socket = new ArrayList<>();

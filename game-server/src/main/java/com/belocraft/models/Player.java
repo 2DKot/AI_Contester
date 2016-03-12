@@ -12,12 +12,29 @@ package com.belocraft.models;
 public class Player {
 
     private float x = 0;
+    private int score = 0;
 
-    public Player(float x) {
+    public int getScore() {
+        return score;
+    }
+    private final String nickName;
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public Player(float x, String nickName, int score) {
         this.x = x;
+        this.nickName = nickName;
+        this.score = score;
     }
 
     public float getPositionX() {
         return x;
+    }
+    
+    public void addScore(int score)
+    {
+        this.score += score;
     }
 }

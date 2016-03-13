@@ -14,7 +14,7 @@ gradlew build
 
 If you have arguments needed to translate in args (main void):
 ``` bash
-gradlew run -Parg1=4 -Parg2=200
+gradlew run -Psargs=4,200
 ```
 
 It application takes two arguments. First is count player (strategy). Second is count ticks.

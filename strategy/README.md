@@ -9,7 +9,7 @@ gradlew run
 
 If you have arguments needed to translate in args (main void):
 ``` bash
-gradlew run -Parg1=127.0.0.1 -Parg2=25
+gradlew run -Psargs=127.0.0.1,25050
 ```
 
 It application takes two arguments. First is ip adress. Second is number port.

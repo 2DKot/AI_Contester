@@ -30,8 +30,9 @@ public class Network {
     private ServerSocket server;
     private final ArrayList<Socket> socket;
     private Boolean sendContext;
+    private final int strategyCount;
 
-    public Network(GameServer server) {
+    public Network(GameServer server, int strategyCount) {
 
         int port = 25;
         while (true) {
@@ -46,6 +47,7 @@ public class Network {
         this.gameServer = server;
         this.sendContext = false;
         this.socket = new ArrayList<>();
+        this.strategyCount = strategyCount;
     }
 
     public void sendData() throws IOException {
@@ -80,7 +82,7 @@ public class Network {
 
     public void waitConnection() throws IOException {
         System.out.println("wait conection user");
-        for (int i = 0; i < Main.getStrategyCount(); i++) {
+        for (int i = 0; i < strategyCount; i++) {
             socket.add(server.accept());
             System.out.println("user " + String.valueOf(i+1) + " connected");
         }
@@ -88,10 +90,10 @@ public class Network {
 
     public void readData() {
 
-        LocalStrategy[] lstrategies = new LocalStrategy[Main.getStrategyCount()];
+        LocalStrategy[] lstrategies = new LocalStrategy[strategyCount];
         
         int i = 0;
-        while(i < Main.getStrategyCount()) {
+        while(i < strategyCount) {
 
             if (socket.get(i) == null) {
                 i++;

@@ -22,10 +22,10 @@ public class JsonResult {
     
     private final ArrayList<Tuple<Integer,ArrayList>> mapHistory;
     
-    public JsonResult()
+    public JsonResult(int strategyCount)
     {
         this.mapHistory = new ArrayList<>();    
-        for (Integer i = 0; i < Main.getStrategyCount(); i++){
+        for (Integer i = 0; i < strategyCount; i++){
             this.mapHistory.add(new Tuple<>(i.intValue(),new ArrayList()));
         }
     }        

@@ -22,17 +22,21 @@ public class GameServer {
     private final Network network;
     private Boolean allReaded;
     private Boolean gameOver; 
+    private final int ticksCount;
+    private final int strategyCount;
 
-    public GameServer() {
+    public GameServer(int strategyCount, int ticksCount) {
         this.processor = new Processor();        
-        this.network = new com.belocraft.gameplay.Network(this);        
+        this.network = new com.belocraft.gameplay.Network(this,strategyCount);        
         this.allReaded = false;
-        Player[] players = new Player[Main.getStrategyCount()];
+        Player[] players = new Player[strategyCount];
         for (int i = 0; i < players.length; i++) {
             players[i] = new Player(15);
         }
         this.world = new World(players);
         this.gameOver = false;        
+        this.ticksCount = ticksCount;
+        this.strategyCount = strategyCount;
     }
 
     public void setLocalStrategy(LocalStrategy[] lstrategy) {
@@ -50,9 +54,9 @@ public class GameServer {
 
     public void start() throws FileNotFoundException, IOException {
         
-        JsonResult jsonResult = new JsonResult();
+        JsonResult jsonResult = new JsonResult(strategyCount);
         
-        int ticks = Main.getTicksCount();
+        int ticks = this.ticksCount;
  
         network.waitConnection();
 

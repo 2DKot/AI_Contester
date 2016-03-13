@@ -5,7 +5,6 @@
  */
 package com.belocraft.gameplay;
 
-import com.belocraft.Main;
 import com.belocraft.mymath.Tuple;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;

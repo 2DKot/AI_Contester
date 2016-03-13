@@ -5,7 +5,6 @@
  */
 package com.belocraft.gameplay;
 
-import com.belocraft.Main;
 import com.belocraft.models.Player;
 import com.belocraft.models.World;
 import java.io.FileNotFoundException;

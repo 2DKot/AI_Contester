@@ -37,6 +37,6 @@ public class Main {
         GameServer game = new GameServer(strategyCount, ticksCount);
         game.start();
         
-        System.out.print("[END]");
+        System.out.println("[END]");
     }
 }

@@ -18,7 +18,7 @@ public class Main {
      * @param args the command line arguments
      * @throws java.io.IOException
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, Exception {
         Runner runner;
 
         String adress = "127.0.0.1";
@@ -27,9 +27,10 @@ public class Main {
         if (args.length > 1) {
             adress = args[0];
             port = Integer.parseInt(args[1]);
-        }else
+        }
+        if (args.length == 1)
         {
-            System.out.println("Run with standart constants " +adress+":"+port);
+            throw new Exception("Not enougth parametrs, need two parametrs adress and port");            
         }
         
         runner = new Runner();

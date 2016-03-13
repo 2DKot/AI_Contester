@@ -17,11 +17,10 @@ import javax.json.JsonObjectBuilder;
  *
  * @author Eugene
  */
-public class JsonResult {
+public class JsonLog {
     
     private final ArrayList<Tuple<Integer,ArrayList>> mapHistory;
-    
-    public JsonResult(int strategyCount)
+    public JsonLog(int strategyCount)
     {
         this.mapHistory = new ArrayList<>();    
         for (Integer i = 0; i < strategyCount; i++){
@@ -53,7 +52,7 @@ public class JsonResult {
     
     void writeToFile(String json) throws FileNotFoundException
     {
-        try (PrintWriter out = new PrintWriter("result.json")) {
+        try (PrintWriter out = new PrintWriter("log.json")) {
             out.write(json);
             out.flush();
         }

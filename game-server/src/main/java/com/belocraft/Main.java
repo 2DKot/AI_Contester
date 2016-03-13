@@ -13,8 +13,8 @@ import java.io.IOException;
  *
  * @author Eugene
  */
-public class Main {    
-
+public class Main { 
+    
     /**
      * @param args the command line arguments
      * @throws java.io.FileNotFoundException

@@ -15,7 +15,7 @@ import java.io.IOException;
  */
 public class Main {
 
-    private static int strategyCount = 4;
+    private static int strategyCount = 2;
     private static int ticksCount = 200;
 
     /**

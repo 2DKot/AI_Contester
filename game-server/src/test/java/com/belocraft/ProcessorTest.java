@@ -30,7 +30,7 @@ public class ProcessorTest extends junit.framework.TestCase {
         LocalStrategy ls = new LocalStrategy(Direction.left);
         lss[0] = ls;
         Player[] players = new Player[1];
-        Player player = new Player(1);
+        Player player = new Player(1,"",0);
         players[0] = player;
         World world = new World(players);
         
@@ -45,7 +45,7 @@ public class ProcessorTest extends junit.framework.TestCase {
         LocalStrategy ls = new LocalStrategy(Direction.right);
         lss[0] = ls;
         Player[] players = new Player[1];
-        Player player = new Player(0);
+        Player player = new Player(0,"",0);
         players[0] = player;
         World world = new World(players);
         
@@ -60,7 +60,7 @@ public class ProcessorTest extends junit.framework.TestCase {
         LocalStrategy ls = new LocalStrategy(Direction.none);
         lss[0] = ls;
         Player[] players = new Player[1];
-        Player player = new Player(0);
+        Player player = new Player(0,"",0);
         players[0] = player;
         World world = new World(players);
         

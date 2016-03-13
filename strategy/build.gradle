@@ -24,10 +24,16 @@ task testReport(type: TestReport){
 	reportOn subprojects*.test
 }
 
+
 run
 {
 standardInput = System.in
+
+  if (project.hasProperty('sargs')) {
+      args(sargs.split(','))
+  }
 }
+
 
 mainClassName = 'com.belocraft.Main'
 

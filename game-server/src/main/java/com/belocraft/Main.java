@@ -13,35 +13,29 @@ import java.io.IOException;
  *
  * @author Eugene
  */
-public class Main {
-
-    private static int strategyCount = 2;
-    private static int ticksCount = 200;
-
+public class Main { 
+    
     /**
      * @param args the command line arguments
      * @throws java.io.FileNotFoundException
      */
     public static void main(String[] args) throws FileNotFoundException, IOException {
 
+         int strategyCount = 2;
+         int ticksCount = 200;
+         
+         if (args.length == 1)
+         {
+                strategyCount = Integer.parseInt(args[0]);                   
+         }
         if (args.length > 1) {
-            Main.strategyCount = Integer.parseInt(args[0]);
-            if (Main.strategyCount < 2 || Main.strategyCount > 4) {
-                Main.strategyCount = 2;
-            }            
-            Main.ticksCount = Integer.parseInt(args[1]);
-            
+            strategyCount = Integer.parseInt(args[0]);                   
+            ticksCount = Integer.parseInt(args[1]);            
         }
 		
-        GameServer game = new GameServer(2550);
+        GameServer game = new GameServer(strategyCount, ticksCount);
         game.start();
-    }
-
-    public static int getStrategyCount() {
-        return strategyCount;
-    }
-
-    public static int getTicksCount() {
-        return ticksCount;
+        
+        System.out.println("[END]");
     }
 }

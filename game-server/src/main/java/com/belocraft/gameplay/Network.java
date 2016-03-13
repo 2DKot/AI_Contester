@@ -5,7 +5,6 @@
  */
 package com.belocraft.gameplay;
 
-import com.belocraft.Main;
 import com.belocraft.models.Direction;
 import com.belocraft.models.Player;
 import java.io.ByteArrayInputStream;
@@ -15,6 +14,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
@@ -26,16 +27,26 @@ import javax.json.JsonStructure;
  */
 public class Network {
 
-    private GameServer gameServer;
+    private final GameServer gameServer;
     private ServerSocket server;
-    private ArrayList<Socket> socket;
+    private final ArrayList<Socket> socket;
     private Boolean sendContext;
+    private final int strategyCount;
 
-    public Network(GameServer server, int port) throws IOException {
-        this.server = new ServerSocket(port);
+    public Network(GameServer server, int strategyCount) {
+
+        try {
+            this.server = new ServerSocket(0);
+        } catch (IOException ex) {            
+            System.out.println(ex.getMessage());
+        }
+        
+        System.out.println("[PORT] " + this.server.getLocalPort());
+
         this.gameServer = server;
         this.sendContext = false;
         this.socket = new ArrayList<>();
+        this.strategyCount = strategyCount;
     }
 
     public void sendData() throws IOException {
@@ -70,7 +81,7 @@ public class Network {
 
     public void waitConnection() throws IOException {
         System.out.println("wait conection user");
-        for (int i = 0; i < Main.getStrategyCount(); i++) {
+        for (int i = 0; i < strategyCount; i++) {
             socket.add(server.accept());
             System.out.println("user " + String.valueOf(i+1) + " connected");
         }
@@ -78,10 +89,10 @@ public class Network {
 
     public void readData() {
 
-        LocalStrategy[] lstrategies = new LocalStrategy[Main.getStrategyCount()];
+        LocalStrategy[] lstrategies = new LocalStrategy[strategyCount];
         
         int i = 0;
-        while(i < Main.getStrategyCount()) {
+        while(i < strategyCount) {
 
             if (socket.get(i) == null) {
                 i++;

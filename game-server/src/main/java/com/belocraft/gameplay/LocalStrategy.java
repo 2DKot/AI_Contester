@@ -13,7 +13,7 @@ import com.belocraft.models.Direction;
  */
 public class LocalStrategy {
 
-    private Direction direction;
+    private final Direction direction;
 
     public LocalStrategy(Direction direction) {
         this.direction = direction;

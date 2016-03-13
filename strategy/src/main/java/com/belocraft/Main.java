@@ -18,20 +18,24 @@ public class Main {
      * @param args the command line arguments
      * @throws java.io.IOException
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, Exception {
         Runner runner;
 
-        String address = "127.0.0.1";
-        int port = 2550;
+        String adress = "127.0.0.1";
+        int port = 25;
 
-        if (args.length > 0) {
-            address = args[0];
+        if (args.length > 1) {
+            adress = args[0];
             port = Integer.parseInt(args[1]);
         }
-
+        if (args.length == 1)
+        {
+            throw new Exception("Not enougth parametrs, need two parametrs adress and port");            
+        }
+        
         runner = new Runner();
 
-        if (runner.connect(address, port)) {
+        if (runner.connect(adress, port)) {
             runner.run();
         }
     }

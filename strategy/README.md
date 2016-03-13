@@ -7,6 +7,14 @@ Then, run cmd or powershell 'game-server' folder and type:
 gradlew run
 ```
 
+If you have arguments needed to translate in args (main void):
+``` bash
+gradlew run -Psargs=127.0.0.1,25050
+```
+
+It application takes two arguments. First is ip adress. Second is number port.
+
+
 If you don't want to run the application after build
 ``` bash
 gradlew build

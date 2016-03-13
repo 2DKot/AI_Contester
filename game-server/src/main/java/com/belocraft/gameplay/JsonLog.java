@@ -5,7 +5,6 @@
  */
 package com.belocraft.gameplay;
 
-import com.belocraft.Main;
 import com.belocraft.mymath.Tuple;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -21,11 +20,10 @@ import javax.json.JsonObjectBuilder;
 public class JsonLog {
     
     private final ArrayList<Tuple<Integer,ArrayList>> mapHistory;
-    
-    public JsonLog()
+    public JsonLog(int strategyCount)
     {
         this.mapHistory = new ArrayList<>();    
-        for (Integer i = 0; i < Main.getStrategyCount(); i++){
+        for (Integer i = 0; i < strategyCount; i++){
             this.mapHistory.add(new Tuple<>(i.intValue(),new ArrayList()));
         }
     }        

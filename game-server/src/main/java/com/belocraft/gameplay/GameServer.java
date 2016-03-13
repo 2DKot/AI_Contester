@@ -5,7 +5,6 @@
  */
 package com.belocraft.gameplay;
 
-import com.belocraft.Main;
 import com.belocraft.models.Player;
 import com.belocraft.models.World;
 import java.io.FileNotFoundException;
@@ -25,18 +24,22 @@ public class GameServer {
     private final Network network;
     private Boolean allReaded;
     private Boolean gameOver; 
+    private final int ticksCount;
+    private final int strategyCount;
     private final Score score;
 
-    public GameServer(int port) throws IOException {
+    public GameServer(int strategyCount, int ticksCount) {
         this.processor = new Processor();        
-        this.network = new com.belocraft.gameplay.Network(this,port);        
+        this.network = new com.belocraft.gameplay.Network(this,strategyCount);        
         this.allReaded = false;
-        Player[] players = new Player[Main.getStrategyCount()];
+        Player[] players = new Player[strategyCount];
         for (int i = 0; i < players.length; i++) {
             players[i] = new Player(15, "Player " + (i+1),0);
         }
         this.world = new World(players);
         this.gameOver = false;        
+        this.ticksCount = ticksCount;
+        this.strategyCount = strategyCount;
         this.score = new Score();
     }
 
@@ -55,9 +58,13 @@ public class GameServer {
 
     public void start() throws FileNotFoundException, IOException {                        
         
+<<<<<<< HEAD
+        JsonResult jsonResult = new JsonResult(strategyCount);
+=======
         JsonLog jsonResult = new JsonLog();
+>>>>>>> master
         
-        int ticks = Main.getTicksCount();
+        int ticks = this.ticksCount;
  
         network.waitConnection();
 

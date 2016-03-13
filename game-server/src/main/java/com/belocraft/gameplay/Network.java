@@ -37,8 +37,8 @@ public class Network {
 
         try {
             this.server = new ServerSocket(0);
-        } catch (IOException ex) {
-            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {            
+            System.out.println(ex.getMessage());
         }
         
         System.out.println("[PORT] " + this.server.getLocalPort());

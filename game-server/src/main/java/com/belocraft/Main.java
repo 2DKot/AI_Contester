@@ -25,11 +25,7 @@ public class Main {
          int ticksCount = 200;
          
         if (args.length > 1) {
-            strategyCount = Integer.parseInt(args[0]);
-            if (strategyCount < 2 || strategyCount > 4) 
-            {
-                strategyCount = 2;
-            }            
+            strategyCount = Integer.parseInt(args[0]);                   
             ticksCount = Integer.parseInt(args[1]);
             
         }

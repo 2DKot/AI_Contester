@@ -28,7 +28,7 @@ public class Main {
             address = args[0];
             port = Integer.parseInt(args[1]);
         }
-
+        
         runner = new Runner();
 
         if (runner.connect(address, port)) {

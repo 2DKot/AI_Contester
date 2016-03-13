@@ -15,6 +15,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
@@ -34,16 +36,14 @@ public class Network {
 
     public Network(GameServer server, int strategyCount) {
 
-        int port = 25;
-        while (true) {
-            try {
-                this.server = new ServerSocket(port);
-                System.out.println("[PORT] " + port);
-                break;
-            } catch (Exception ex) {
-                port++;
-            }
+        try {
+            this.server = new ServerSocket(0);
+        } catch (IOException ex) {
+            Logger.getLogger(Network.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        System.out.println("[PORT] " + this.server.getLocalPort());
+
         this.gameServer = server;
         this.sendContext = false;
         this.socket = new ArrayList<>();

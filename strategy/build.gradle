@@ -24,10 +24,13 @@ task testReport(type: TestReport){
 	reportOn subprojects*.test
 }
 
+
 run
 {
 standardInput = System.in
+args = ["$arg1","$arg2"]
 }
+
 
 mainClassName = 'com.belocraft.Main'
 

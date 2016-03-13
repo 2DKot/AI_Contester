@@ -24,10 +24,13 @@ public class Main {
          int strategyCount = 2;
          int ticksCount = 200;
          
+         if (args.length == 1)
+         {
+                strategyCount = Integer.parseInt(args[0]);                   
+         }
         if (args.length > 1) {
             strategyCount = Integer.parseInt(args[0]);                   
-            ticksCount = Integer.parseInt(args[1]);
-            
+            ticksCount = Integer.parseInt(args[1]);            
         }
 		
         GameServer game = new GameServer(strategyCount, ticksCount);

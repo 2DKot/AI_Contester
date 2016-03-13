@@ -21,17 +21,20 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Runner runner;
 
-        String address = "127.0.0.1";
+        String adress = "127.0.0.1";
         int port = 25;
 
         if (args.length > 1) {
-            address = args[0];
+            adress = args[0];
             port = Integer.parseInt(args[1]);
+        }else
+        {
+            System.out.println("Run with standart constants " +adress+":"+port);
         }
         
         runner = new Runner();
 
-        if (runner.connect(address, port)) {
+        if (runner.connect(adress, port)) {
             runner.run();
         }
     }

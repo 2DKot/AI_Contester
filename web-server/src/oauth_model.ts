@@ -1,3 +1,4 @@
+/// <reference path="../typings/tsd.d.ts" />
 "use strict";
 
 import * as OAuth from 'oauth2-server';

@@ -1,8 +1,4 @@
-/// <reference path="../typings/express/express.d.ts" />
-/// <reference path="../typings/body-parser/body-parser.d.ts" />
-/// <reference path="../typings/oauth2-server/oauth2-server.d.ts" />
-/// <reference path="../typings/mongoose/mongoose.d.ts" />
-
+/// <reference path="../typings/tsd.d.ts" />
 "use strict";
 
 import express = require('express');

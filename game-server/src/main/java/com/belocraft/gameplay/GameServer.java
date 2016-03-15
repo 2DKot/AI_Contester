@@ -58,11 +58,7 @@ public class GameServer {
 
     public void start() throws FileNotFoundException, IOException {                        
         
-<<<<<<< HEAD
-        JsonResult jsonResult = new JsonResult(strategyCount);
-=======
-        JsonLog jsonResult = new JsonLog();
->>>>>>> master
+        JsonLog jsonResult = new JsonLog(strategyCount);
         
         int ticks = this.ticksCount;
  

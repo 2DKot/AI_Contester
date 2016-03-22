@@ -7,6 +7,7 @@ import {Hello, Secret} from './test';
 import {Login} from './login'
 import {Signup} from './signup'
 import {SendStrategy} from './sendStrategy'
+import {StrategiesList} from './StrategiesList'
 
 var endpoint = "http://" + config.backend.ip + ":" + config.backend.port + "/";
 
@@ -70,6 +71,7 @@ class App extends React.Component<IAppProps, IAppState> {
                     <div>
                         <Secret token = {this.state.accessToken}/>
                         <SendStrategy token = {this.state.accessToken}/>
+                        <StrategiesList token = {this.state.accessToken}/>
                     </div>:
                     <div>
                         <Signup/>

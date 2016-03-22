@@ -20,7 +20,8 @@ export class Strategy extends React.Component<IStrategyProps, IStrategyState> {
     render() {
         return (
             <div style={{ border: "solid" }}>
-                { this.props.strategy.sender.name }
+                { this.props.strategy.userId }
+                { this.props.strategy.status }
             </div>
         );
     }

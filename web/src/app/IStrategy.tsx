@@ -1,9 +1,10 @@
 import {IUser} from './IUser';
 
 export interface IStrategy {
-    sender: IUser;
+    userId: string;
     status: string;
     source: string;
     errorMessage?: string;
     class?: Buffer;
+    id: string;
 }

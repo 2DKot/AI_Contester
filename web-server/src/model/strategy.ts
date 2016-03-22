@@ -17,8 +17,8 @@ export interface IStrategy extends Document {
     userId: string;
     source: string;
     status: string;
-    class: Buffer;
-    errorMessage: string;
+    class?: Buffer;
+    errorMessage?: string;
 }
 
 export var StrategyModel = connection.model<IStrategy>('Strategies', StrategySchema);

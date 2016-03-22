@@ -101,3 +101,20 @@ function removeDirSync(dirPath: string) {
     });
     fs.rmdirSync(dirPath);
 }
+
+
+router.get("/", function(req: Request, res: Response, next) {
+    StrategyModel.find({}, (err: any, strategies: IStrategy[]) => {
+        if (err) {
+            res.status(500).json({
+                message: "Database error."
+            });
+            throw err;
+        }
+        
+        res.status(200).json({
+            message: "Finded " + strategies.length + " strategies",
+            strategies: strategies
+        });
+    });
+});

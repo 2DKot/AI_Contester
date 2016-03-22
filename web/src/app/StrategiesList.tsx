@@ -38,16 +38,17 @@ export class StrategiesList extends React.Component<IStrategiesListProps, IStrat
     }
     
     render() {
-        var strategies = this.state.strategies.map((strategy => {
-            <Strategy strategy={strategy}/>
-        }));
+        var strategies = this.state.strategies.map(((strategy, index) => 
+            <li key={index}><Strategy strategy={strategy}/></li>
+        ));
+        console.log(strategies);
         return (
             <div style={{ border: "solid" }}>
-                <h3>Список стратегий</h3>
+                <h3>Список стратегий ({this.state.strategies.length})</h3>
                 <button 
                     onClick = {() => this.handleRefresh()}
                 > Обновить </button>
-                {strategies}
+                <ul>{strategies}</ul>
             </div>
         );
     }

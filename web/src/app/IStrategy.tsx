@@ -6,5 +6,6 @@ export interface IStrategy {
     source: string;
     errorMessage?: string;
     class?: Buffer;
-    id: string;
+    _id: string;
+    date: Date;
 }

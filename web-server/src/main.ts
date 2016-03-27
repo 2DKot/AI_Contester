@@ -17,6 +17,9 @@ app.use(registration);
 var strategies: express.Router = require('./strategies');
 app.use('/strategies/', strategies);
 
+var users: express.Router = require('./users');
+app.use('/users/', users);
+
 var router: express.Router = express.Router();
 
 router.get('/hello/:name', function(req: express.Request, res: express.Response, next) {
@@ -62,7 +65,7 @@ app.all('/secret', getUser, function(req: AuthorisedRequest, res: Response) {
     });
 });
 
-app.use(oauth.errorHandler());
+//app.use(oauth.errorHandler());
 
 app.listen(3000, function () {
   console.log('Backend-server listening on port 3000!');

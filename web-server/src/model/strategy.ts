@@ -10,7 +10,8 @@ var StrategySchema: Schema = new Schema({
     source: { type: String },
     status: { type: String },
     class: { type: Buffer },
-    errorMessage: { type: String }
+    errorMessage: { type: String },
+    date: { type: Date, default: new Date() }
 });
 
 export interface IStrategy extends Document {
@@ -19,6 +20,7 @@ export interface IStrategy extends Document {
     status: string;
     class?: Buffer;
     errorMessage?: string;
+    date: Date;
 }
 
 export var StrategyModel = connection.model<IStrategy>('Strategies', StrategySchema);

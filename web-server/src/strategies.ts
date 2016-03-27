@@ -11,7 +11,7 @@ module.exports = router;
 
 router.post("/", getUser, function(req: AuthorisedRequest, res: Response, next) {
     function paramNotFound(paramName: string) {
-        res.json(400, {
+        res.status(400).json({
             message: 'Need for ' + paramName + ' in request body!'
         });
     };
@@ -27,7 +27,7 @@ router.post("/", getUser, function(req: AuthorisedRequest, res: Response, next) 
     var strategy = new StrategyModel({
         source: source,
         userId: req.user.id,
-        status: "compiling"
+        status: "compiling",
     });
     
     strategy.save((err: any, result: IStrategy) => {
@@ -57,7 +57,7 @@ function compileStrategy(strategy: IStrategy) {
     var classPath = tDir + "\\MyStrategy.class";
     fs.writeFileSync(sourcePath, strategy.source);
     
-    var command = "javac -implicit:none -sourcepath " + config.strategy.classpath + " MyStrategy.java";
+    var command = "javac -encoding utf8 -implicit:none -sourcepath " + config.strategy.classpath + " MyStrategy.java";
     cp.exec(command, { cwd: tDir }, (err, stdout, stderr) => {
         console.log(`stdout: ${stdout}`);
 
@@ -104,14 +104,14 @@ function removeDirSync(dirPath: string) {
 
 
 router.get("/", function(req: Request, res: Response, next) {
-    StrategyModel.find({}, (err: any, strategies: IStrategy[]) => {
+    StrategyModel.find({}, {class: 0} , (err: any, strategies: IStrategy[]) => {
         if (err) {
             res.status(500).json({
                 message: "Database error."
             });
             throw err;
         }
-        
+        console.log(typeof(strategies[0].date))
         res.status(200).json({
             message: "Finded " + strategies.length + " strategies",
             strategies: strategies

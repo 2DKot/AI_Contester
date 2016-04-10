@@ -57,7 +57,9 @@ function compileStrategy(strategy: IStrategy) {
     var classPath = tDir + "\\MyStrategy.class";
     fs.writeFileSync(sourcePath, strategy.source);
     
-    var command = "javac -encoding utf8 -implicit:none -sourcepath " + config.strategy.classpath + " MyStrategy.java";
+    var command = "chcp 65001 | " + config.jdk.binPath + 
+        "javac\" -encoding utf8 -implicit:none -sourcepath " + 
+        config.strategy.classpath + " MyStrategy.java";
     cp.exec(command, { cwd: tDir }, (err, stdout, stderr) => {
         console.log(`stdout: ${stdout}`);
 
@@ -111,7 +113,6 @@ router.get("/", function(req: Request, res: Response, next) {
             });
             throw err;
         }
-        console.log(typeof(strategies[0].date))
         res.status(200).json({
             message: "Finded " + strategies.length + " strategies",
             strategies: strategies

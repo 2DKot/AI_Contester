@@ -2,5 +2,10 @@
     "strategy": {
         "sourcepath": "..\\strategy\\src\\main\\java",
         "relativePath": true
+    },
+    "jdk": {
+        "binPath_comment": "use this, if you haven't jdk bin directory in your PATH",
+        "binPath_example": "C:\\Program Files\\Java\\jdk1.8.0_66\\bin\\",
+        "binPath": ""
     }
 }

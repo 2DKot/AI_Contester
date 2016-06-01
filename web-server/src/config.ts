@@ -22,7 +22,7 @@ class Strategy {
     constructor(conf: RawStrategy) {
         var prefix = "";
         if(conf && conf.relativePath) {
-            prefix = process.cwd() + "\\";
+            prefix = process.cwd() + "/";
         }
         this.classpath = prefix + conf.sourcepath;
     }

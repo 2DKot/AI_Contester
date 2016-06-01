@@ -17,6 +17,6 @@ app.use('/lib/react', serveStatic("node_modules/react/dist/"));
 app.use('/lib/react', serveStatic("node_modules/react-dom/dist/"));
 app.use('/lib/fetch', serveStatic("node_modules/whatwg-fetch/"));
 app.use('/config', serveStatic("config/"));
-app.listen(80, function() {
-    console.log("Front-end server is ready!");
+app.listen(8080, function() {
+    console.log("Front-end server is ready! And listen on 8080.");
 });

@@ -1,6 +1,6 @@
 {
     "strategy": {
-        "sourcepath": "..\\strategy\\src\\main\\java",
+        "sourcepath": "../strategy/src/main/java",
         "relativePath": true
     },
     "jdk": {

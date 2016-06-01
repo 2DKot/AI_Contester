@@ -47,19 +47,27 @@ router.post("/", getUser, function(req: AuthorisedRequest, res: Response, next) 
 
 import temp = require('temp');
 import fs = require('fs');
-import cp = require('child_process')
+import cp = require('child_process');
+import os = require('os');
 import {config} from './config';
 
 function compileStrategy(strategy: IStrategy) {
     var tDir = temp.mkdirSync({});
     console.log(tDir);
-    var sourcePath = tDir + "\\MyStrategy.java";
-    var classPath = tDir + "\\MyStrategy.class";
+    var sourcePath = tDir + "/MyStrategy.java";
+    var classPath = tDir + "/MyStrategy.class";
     fs.writeFileSync(sourcePath, strategy.source);
-    
-    var command = "chcp 65001 | " + config.jdk.binPath + 
+    console.log('files:')
+    console.log(fs.readdirSync(tDir));
+    var command = config.jdk.binPath + 
         "javac\" -encoding utf8 -implicit:none -sourcepath " + 
         config.strategy.classpath + " MyStrategy.java";
+    if(os.type() == 'Windows_NT') {
+        command = "chcp 65001 | " + command;
+    }
+    
+    console.log('command:')
+    console.log(command);
     cp.exec(command, { cwd: tDir }, (err, stdout, stderr) => {
         console.log(`stdout: ${stdout}`);
 
@@ -80,9 +88,9 @@ function compileStrategy(strategy: IStrategy) {
                 console.log(err);
             }
         });
-        ifExistRemoveSync(sourcePath);
-        ifExistRemoveSync(classPath);
-        fs.rmdirSync(tDir);
+        //ifExistRemoveSync(sourcePath);
+        //ifExistRemoveSync(classPath);
+        //fs.rmdirSync(tDir);
     });
 }
 

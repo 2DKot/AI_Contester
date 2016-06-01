@@ -59,7 +59,7 @@ gulp.task('copy-images', [], () => {
 });
 
 gulp.task('browserify', ['compile-src'], () => {
-    let result = browserify('build/app.js', { bundleExternal: false })
+    let result = browserify('build/app/app.js', { bundleExternal: false })
         .bundle()
         .pipe(source('app.js'))
         .pipe(gulp.dest('dist/app/js'));

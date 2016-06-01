@@ -1,3 +1,4 @@
+/// <reference path="../typings/tsd.d.ts" />
 "use strict";
 
 import {Request, Response, Router} from 'express';
@@ -35,7 +36,6 @@ router.post("/users", function(req: Request, res: Response, next) {
                 message: "Database error."
             });
             throw err;
-            return;
         }
         if (user) {
             if(user.username == username) {
@@ -60,8 +60,7 @@ router.post("/users", function(req: Request, res: Response, next) {
                     message: "Database error."
                 });
                 throw err;
-                return;
-            };
+            }
             res.status(201).json({
                 message: "User " + username + " was successfully registered."
             });

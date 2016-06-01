@@ -1,3 +1,4 @@
+/// <reference path="../typings/tsd.d.ts" />
 "use strict";
 
 import oauthserver = require('oauth2-server');

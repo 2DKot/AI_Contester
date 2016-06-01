@@ -14,7 +14,7 @@ export interface ISendStrategyProps {
 
 export interface ISendStrategyState {
     strategyCode?: string;
-    statusMessage?: string[];
+    statusMessage?: string;
 }
 
 export class SendStrategy extends React.Component<ISendStrategyProps, ISendStrategyState> {
@@ -29,6 +29,11 @@ export class SendStrategy extends React.Component<ISendStrategyProps, ISendStrat
     
     handleFile(e) {
         var file: File = e.target.files[0];
+        if(file.size > 100000) {
+            this.setState({statusMessage: "Слишком большой файл!"});
+            return;
+        }
+        console.log(file.type)
         var reader = new FileReader();
         reader.onloadend = (e) => {
             var code = reader.result;
@@ -38,6 +43,14 @@ export class SendStrategy extends React.Component<ISendStrategyProps, ISendStrat
     }
     
     handleSubmit() {
+        function codeToMessage(code: number) {
+            switch (code) {
+                case 200: return "Отправлено на компиляцию.";
+                case 400: return "Ошибочный запрос. Ошибка кода страницы.";
+                case 500: return "Внутренняя ошибка сервера.";
+                default: return "Неожиданный ответ сервера.";
+            }
+        }
         fetch(endpoint + "strategies", {
             method: 'post',
             headers: {
@@ -48,10 +61,12 @@ export class SendStrategy extends React.Component<ISendStrategyProps, ISendStrat
                 source: this.state.strategyCode,
             })
         })
-            .then(response => response.json())
+            .then(response => {
+                this.setState({ statusMessage: codeToMessage(response.status) });
+                return response.json()
+            })
             .then(data => {
-                console.log(data);
-                this.setState({ statusMessage: data.message });
+                console.log(data.message);
             });
     }
     render() {

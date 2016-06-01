@@ -1,8 +1,4 @@
-/// <reference path="../typings/express/express.d.ts" />
-/// <reference path="../typings/body-parser/body-parser.d.ts" />
-/// <reference path="../typings/oauth2-server/oauth2-server.d.ts" />
-/// <reference path="../typings/mongoose/mongoose.d.ts" />
-
+/// <reference path="../typings/tsd.d.ts" />
 "use strict";
 
 import express = require('express');
@@ -20,6 +16,9 @@ app.use(registration);
 
 var strategies: express.Router = require('./strategies');
 app.use('/strategies/', strategies);
+
+var users: express.Router = require('./users');
+app.use('/users/', users);
 
 var router: express.Router = express.Router();
 
@@ -66,7 +65,7 @@ app.all('/secret', getUser, function(req: AuthorisedRequest, res: Response) {
     });
 });
 
-app.use(oauth.errorHandler());
+//app.use(oauth.errorHandler());
 
 app.listen(3000, function () {
   console.log('Backend-server listening on port 3000!');

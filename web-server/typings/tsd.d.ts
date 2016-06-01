@@ -18,3 +18,4 @@
 /// <reference path="oauth2-server/oauth2-server.d.ts" />
 /// <reference path="mongoose/mongoose.d.ts" />
 /// <reference path="body-parser/body-parser.d.ts" />
+/// <reference path="temp/temp.d.ts" />
